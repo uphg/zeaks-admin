@@ -1,0 +1,1 @@
+export { default as XTag } from './x-tag'

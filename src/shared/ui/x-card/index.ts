@@ -1,0 +1,1 @@
+export { default as XCard } from './x-card'

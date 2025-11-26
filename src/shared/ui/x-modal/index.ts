@@ -1,0 +1,1 @@
+export { default as XModal } from './x-modal'

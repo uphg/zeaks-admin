@@ -1,0 +1,1 @@
+export { default as PureButton } from './pure-button'

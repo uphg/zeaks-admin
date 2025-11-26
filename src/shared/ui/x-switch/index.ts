@@ -1,0 +1,1 @@
+export { default as XSwitch } from './x-switch'

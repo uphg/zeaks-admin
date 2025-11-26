@@ -1,0 +1,1 @@
+export { default as XDivider } from './x-divider'
