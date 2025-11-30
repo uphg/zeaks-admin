@@ -1,5 +1,5 @@
-import { defineComponent, ref, computed, type PropType } from '@/shared/ui/vue-imports'
-import { NIcon } from 'naive-ui'
+import { defineComponent, ref, computed, type PropType } from 'vue'
+
 import { mergeClass } from '@/shared/lib'
 import { PureButton } from '../pure-button'
 import { X } from 'lucide-vue-next'

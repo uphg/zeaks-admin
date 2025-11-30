@@ -40,7 +40,7 @@ function createConfirmTypes(type: string) {
       onPositiveClick: async () => {
         try {
           await onConfirm()
-        } catch (e) {
+        } catch (_e) {
           return false
         }
         return true

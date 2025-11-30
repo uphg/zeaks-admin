@@ -1,12 +1,6 @@
-import { createStore } from "@/shared/lib/create-store";
+import { createStore } from "@/shared/alias/vue-use";
 import { ref } from "vue";
-
-interface User { id: '', name: '', rules: [], email: '', token: '', avatar: '', rawRoutes: [], }
-
-interface Perm {
-  resource: string
-  actions: string[]
-}
+import type { User } from "@/shared/lib/utility-types";
 
 export const useUserStore = createStore(() => {
   const user = ref<User | null>(null);

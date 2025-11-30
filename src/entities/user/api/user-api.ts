@@ -1,5 +1,5 @@
-import type { User } from '@/shared/types'
-import { http, type HTTPResponse } from '@/shared/api'
+import type { User } from '@/shared/lib/utility-types'
+import { http } from '@/shared/api'
 
 export interface LoginRequest {
   username: string

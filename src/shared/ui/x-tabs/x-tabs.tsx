@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed, provide, readonly, watch, type PropType } from '@/shared/ui/vue-imports'
+import { defineComponent, ref, provide, readonly, watch } from 'vue'
 import type { ExtractPropTypes } from 'vue'
 
 export const xTabsProps = {

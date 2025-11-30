@@ -1,5 +1,5 @@
-import { defineComponent } from '@/shared/ui/vue-imports'
-import type { FormItemInst, FormItemRule } from 'naive-ui'
+import { defineComponent } from 'vue'
+import type { FormItemRule } from 'naive-ui'
 import { NFormItem } from 'naive-ui'
 
 interface XFormItemProps {

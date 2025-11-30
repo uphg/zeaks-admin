@@ -1,5 +1,6 @@
-import { defineComponent, ref, computed, type PropType } from '@/shared/ui/vue-imports'
-import type { ClassNameValue, RenderFunction } from '@/shared/ui/vue-imports'
+import { defineComponent, computed, type PropType } from 'vue'
+import type { RenderFunction } from 'vue'
+import type { ClassValue } from 'clsx'
 import { pick } from 'lodash-es'
 import { NButton, NModal, NScrollbar } from 'naive-ui'
 import { X } from 'lucide-vue-next'
@@ -51,7 +52,7 @@ const Modal = defineComponent({
   emits: ['update:visible'],
   inheritAttrs: false,
   setup(props, { emit, slots, attrs }) {
-    const classNames = computed(() => mergeClass(defaultClass.wrap, sizeMap[props.size || 'medium'], attrs.class as ClassNameValue))
+    const classNames = computed(() => mergeClass(defaultClass.wrap, sizeMap[props.size || 'medium'], attrs.class as ClassValue))
     function onUpdateVisible(value: boolean) {
       emit('update:visible', value)
     }

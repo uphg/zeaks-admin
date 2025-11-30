@@ -43,7 +43,7 @@ function createConfirmTypes(type: keyof DialogApiInjection) {
       onPositiveClick: async () => {
         try {
           await onConfirm()
-        } catch (e) {
+        } catch {
           return false
         }
         return true

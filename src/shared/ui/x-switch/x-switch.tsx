@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed, type PropType } from '@/shared/ui/vue-imports'
+import { defineComponent, computed, type PropType } from 'vue'
 import type { ClassValue } from 'clsx'
 import { mergeClass } from '@/shared/lib'
 

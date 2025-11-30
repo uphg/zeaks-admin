@@ -1,4 +1,4 @@
-import type { JSONValue } from '@/shared/lib/utility-types'
+
 
 export interface HTTPConfig {
   baseURL?: string

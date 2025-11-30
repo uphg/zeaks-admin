@@ -1,4 +1,4 @@
-import { defineComponent, ref, computed, inject, type PropType } from '@/shared/ui/vue-imports'
+import { defineComponent, ref, computed, inject } from 'vue'
 import type { ExtractPropTypes, Ref } from 'vue'
 
 export const xTabsContentProps = {
