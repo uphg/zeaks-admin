@@ -35,6 +35,7 @@ QWEN.md
 CODEBUDDY.md
 
 *.tsbuildinfo
+temp
 
 .eslintrc-auto-import.json
 src/auto-imports.d.ts

@@ -1,6 +1,8 @@
 import type { DialogOptions } from 'naive-ui'
 import type { DialogApiInjection } from 'naive-ui/es/dialog/src/DialogProvider'
 import type { MessageApiInjection } from 'naive-ui/es/message/src/MessageProvider'
+import type { NotificationApiInjection } from 'naive-ui/es/notification/src/NotificationProvider'
+import type { LoadingBarApiInjection } from 'naive-ui/es/loading-bar/src/LoadingBarProvider'
 import { createDiscreteApi } from 'naive-ui'
 
 interface OpenDialogOptions extends DialogOptions {
@@ -16,7 +18,8 @@ interface Confirm {
 }
 
 const confirmTypes = ['create', 'error', 'info', 'success', 'warning'] as const
-const { dialog, message } = createDiscreteApi(['dialog', 'message']) as any
+
+const { dialog, message, notification, loadingBar } = createDiscreteApi(['message', 'dialog', 'notification', 'loadingBar'])
 
 const defaultOptions = {
   title: '提示',
@@ -33,7 +36,7 @@ function createConfirmDialog() {
   return confirm
 }
 
-function createConfirmTypes(type: string) {
+function createConfirmTypes(type: keyof DialogApiInjection) {
   return (options: OpenDialogOptions) => {
     const { onConfirm, ...rest } = Object.assign(defaultOptions, options)
     const dialogOptions = Object.assign({
@@ -52,4 +55,6 @@ function createConfirmTypes(type: string) {
 
 export const $confirm = createConfirmDialog()
 export const $dialog = dialog as DialogApiInjection
+export const $notification = notification as NotificationApiInjection
+export const $loadingBar = loadingBar as LoadingBarApiInjection
 export const $message = message as MessageApiInjection

@@ -1,5 +1,5 @@
 import type { User } from '@/shared/types'
-import { httpClient } from '@/shared/api'
+import { http, type HTTPResponse } from '@/shared/api'
 
 export interface LoginRequest {
   username: string
@@ -23,17 +23,17 @@ export interface RegisterResponse {
 }
 
 export function login(data: LoginRequest) {
-  return httpClient.post<{ token: string; user: User }>('/auth/login', data)
+  return http.post<{ token: string; user: User }>('/auth/login', data)
 }
 
 export function register(data: RegisterRequest) {
-  return httpClient.post<{ token: string; user: User }>('/auth/register', data)
+  return http.post<{ token: string; user: User }>('/auth/register', data)
 }
 
 export function getUserInfo() {
-  return httpClient.get<User>('/auth/user-info')
+  return http.get<User>('/auth/user-info')
 }
 
 export function updateUserInfo(data: Partial<User>) {
-  return httpClient.put<User>('/auth/user-info', data)
+  return http.put<User>('/auth/user-info', data)
 }

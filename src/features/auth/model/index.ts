@@ -1,1 +1,1 @@
-export * from './auth-store'
+console.log(1)
