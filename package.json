@@ -54,6 +54,7 @@
     "tailwind-merge": "catalog:dev",
     "typescript": "catalog:dev",
     "unocss": "catalog:dev",
+    "unplugin-icons": "catalog:dev",
     "vite": "catalog:dev",
     "vite-plugin-vue-devtools": "catalog:dev",
     "vitest": "catalog:dev",

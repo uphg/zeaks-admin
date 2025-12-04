@@ -2,7 +2,7 @@ import type { MenuMatch } from '@/shared/lib/utility-types'
 import { NBreadcrumb, NBreadcrumbItem, NDropdown } from 'naive-ui'
 import { computed, defineComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useSidebarStore } from '@/stores/sidebar'
+import { useSidebarStore } from '@/shared/ui/layouts/ui/sidebar/use-sidebar-store'
 
 interface BreadcrumbItem {
   label: string
@@ -16,9 +16,9 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const sidebar = useSidebarStore()
+    const { menusMap } = useSidebarStore()
     const breadItems = computed<BreadcrumbItem[]>(() => {
-      const current = sidebar.menusMap?.get(route?.name as string)
+      const current = menusMap.value?.get(route?.name as string)
       if (!current?.matchs) return []
 
       const matchs = current.matchs.filter((item: MenuMatch) => !!item?.name)
@@ -33,7 +33,7 @@ export default defineComponent({
     })
 
     function getDropOptions(item: BreadcrumbItem): any[] {
-      return sidebar.menusMap?.get(item.name)?.children || []
+      return menusMap.value?.get(item.name)?.children || []
     }
 
     function handleDropSelect(name: string) {

@@ -1,6 +1,6 @@
-import { default as Default } from './variants/layout-default'
-import { default as ParentView } from './variants/layout-parent-view'
-import { default as InnerLink } from './variants/layout-inner-link'
+import { default as Default } from './presets/default'
+import { default as ParentView } from './presets/parent-view'
+import { default as InnerLink } from './presets/inner-link'
 
 export const layouts = {
   Default: Default,

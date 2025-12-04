@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
-import LayoutNavTags from '../layout-nav-tags/layout-nav-tags'
-import SidebarToggle from '../layout-sidebar/sidebar-toggle'
+import LayoutNavTags from '../nav-tags/nav-tags'
+import SidebarToggle from '../sidebar/sidebar-toggle'
 import HeaderBreadcrumb from './header-breadcrumb'
 import UserDropdown from './user-dropdown'
 

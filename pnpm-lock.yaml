@@ -21,6 +21,9 @@ catalogs:
     '@types/node':
       specifier: ^24.10.1
       version: 24.10.1
+    '@unocss/preset-wind4':
+      specifier: ^66.5.9
+      version: 66.5.9
     '@vitejs/plugin-vue':
       specifier: ^6.0.2
       version: 6.0.2
@@ -78,6 +81,9 @@ catalogs:
     unocss:
       specifier: ^66.3.3
       version: 66.5.9
+    unplugin-icons:
+      specifier: 22.5.0
+      version: 22.5.0
     vite:
       specifier: npm:rolldown-vite@latest
       version: 7.2.8
@@ -149,7 +155,7 @@ importers:
         specifier: catalog:dev
         version: 24.10.1
       '@unocss/preset-wind4':
-        specifier: ^66.5.9
+        specifier: catalog:dev
         version: 66.5.9
       '@vitejs/plugin-vue':
         specifier: catalog:dev
@@ -208,6 +214,9 @@ importers:
       unocss:
         specifier: catalog:dev
         version: 66.5.9(postcss@8.5.6)(rolldown-vite@7.2.8(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(yaml@2.8.1))
+      unplugin-icons:
+        specifier: catalog:dev
+        version: 22.5.0(@vue/compiler-sfc@3.5.25)
       vite:
         specifier: catalog:dev
         version: rolldown-vite@7.2.8(@types/node@24.10.1)(esbuild@0.25.12)(jiti@2.6.1)(yaml@2.8.1)
@@ -3481,9 +3490,36 @@ packages:
       vite:
         optional: true
 
+  unplugin-icons@22.5.0:
+    resolution: {integrity: sha512-MBlMtT5RuMYZy4TZgqUL2OTtOdTUVsS1Mhj6G1pEzMlFJlEnq6mhUfoIt45gBWxHcsOdXJDWLg3pRZ+YmvAVWQ==}
+    peerDependencies:
+      '@svgr/core': '>=7.0.0'
+      '@svgx/core': ^1.0.1
+      '@vue/compiler-sfc': ^3.0.2 || ^2.7.0
+      svelte: ^3.0.0 || ^4.0.0 || ^5.0.0
+      vue-template-compiler: ^2.6.12
+      vue-template-es2015-compiler: ^1.9.0
+    peerDependenciesMeta:
+      '@svgr/core':
+        optional: true
+      '@svgx/core':
+        optional: true
+      '@vue/compiler-sfc':
+        optional: true
+      svelte:
+        optional: true
+      vue-template-compiler:
+        optional: true
+      vue-template-es2015-compiler:
+        optional: true
+
   unplugin-utils@0.3.1:
     resolution: {integrity: sha512-5lWVjgi6vuHhJ526bI4nlCOmkCIF3nnfXkCMDeMJrtdvxTs6ZFCM8oNufGTsDbKv/tJ/xj8RpvXjRuPBZJuJog==}
     engines: {node: '>=20.19.0'}
+
+  unplugin@2.3.11:
+    resolution: {integrity: sha512-5uKD0nqiYVzlmCRs01Fhs2BdkEgBS3SAVP6ndrBsuK42iC2+JHyxM05Rm9G8+5mkmRtzMZGY8Ct5+mliZxU/Ww==}
+    engines: {node: '>=18.12.0'}
 
   update-browserslist-db@1.1.4:
     resolution: {integrity: sha512-q0SPT4xyU84saUX+tomz1WLkxUbuaJnR1xWt17M7fJtEJigJeWUNGUqrauFXsHnqev9y9JTRGwk13tFBuKby4A==}
@@ -3661,6 +3697,9 @@ packages:
   webidl-conversions@8.0.0:
     resolution: {integrity: sha512-n4W4YFyz5JzOfQeA8oN7dUYpR+MBP3PIUsn2jLjWXwK5ASUzt0Jc/A5sAUZoCYFJRGF0FBKJ+1JjN43rNdsQzA==}
     engines: {node: '>=20'}
+
+  webpack-virtual-modules@0.6.2:
+    resolution: {integrity: sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==}
 
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
@@ -7325,10 +7364,29 @@ snapshots:
       - postcss
       - supports-color
 
+  unplugin-icons@22.5.0(@vue/compiler-sfc@3.5.25):
+    dependencies:
+      '@antfu/install-pkg': 1.1.0
+      '@iconify/utils': 3.1.0
+      debug: 4.4.3
+      local-pkg: 1.1.2
+      unplugin: 2.3.11
+    optionalDependencies:
+      '@vue/compiler-sfc': 3.5.25
+    transitivePeerDependencies:
+      - supports-color
+
   unplugin-utils@0.3.1:
     dependencies:
       pathe: 2.0.3
       picomatch: 4.0.3
+
+  unplugin@2.3.11:
+    dependencies:
+      '@jridgewell/remapping': 2.3.5
+      acorn: 8.15.0
+      picomatch: 4.0.3
+      webpack-virtual-modules: 0.6.2
 
   update-browserslist-db@1.1.4(browserslist@4.28.0):
     dependencies:
@@ -7520,6 +7578,8 @@ snapshots:
       xml-name-validator: 5.0.0
 
   webidl-conversions@8.0.0: {}
+
+  webpack-virtual-modules@0.6.2: {}
 
   whatwg-encoding@3.1.1:
     dependencies:
