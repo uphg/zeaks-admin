@@ -12,12 +12,12 @@ export default defineConfig(() => ({
     vueJsx(),
     UnoCSS(),
     Icons({
-        autoInstall: true,
-        compiler: 'vue3',
-        customCollections: {
-          local: FileSystemIconLoader('./src/assets/icons'),
-        },
-      }),
+      autoInstall: true,
+      compiler: 'vue3',
+      customCollections: {
+        local: FileSystemIconLoader('./src/assets/icons'),
+      },
+    })
   ],
   resolve: {
     alias: {

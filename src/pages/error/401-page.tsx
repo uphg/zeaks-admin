@@ -1,4 +1,4 @@
-import { defineComponent } from '@/shared/ui/vue-imports'
+import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import { NButton, NResult } from 'naive-ui'
 
@@ -10,9 +10,10 @@ const NotFoundPage = defineComponent({
     return () => (
       <div class="flex h-screen items-center justify-center">
         <NResult
-          status="404"
-          title="404 页面未找到"
-          description="抱歉，您访问的页面不存在">
+          status="403"
+          title="403 禁止访问"
+          description="总有些门是对你关闭的"
+        >
           {{
             footer: () => (
               <NButton type="primary" onClick={() => router.push('/home')}>

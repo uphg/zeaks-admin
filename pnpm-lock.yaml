@@ -100,12 +100,6 @@ catalogs:
     '@vueuse/core':
       specifier: 14.0.0
       version: 14.0.0
-    lucide:
-      specifier: ^0.554.0
-      version: 0.554.0
-    lucide-vue-next:
-      specifier: ^0.554.0
-      version: 0.554.0
     naive-ui:
       specifier: ^2.42.0
       version: 2.43.2
@@ -123,12 +117,6 @@ importers:
       '@vueuse/core':
         specifier: catalog:prod
         version: 14.0.0(vue@3.5.25(typescript@5.9.3))
-      lucide:
-        specifier: catalog:prod
-        version: 0.554.0
-      lucide-vue-next:
-        specifier: catalog:prod
-        version: 0.554.0(vue@3.5.25(typescript@5.9.3))
       naive-ui:
         specifier: catalog:prod
         version: 2.43.2(vue@3.5.25(typescript@5.9.3))
@@ -142,6 +130,12 @@ importers:
       '@antfu/eslint-config':
         specifier: catalog:dev
         version: 4.19.0(@vue/compiler-sfc@3.5.25)(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3)(vitest@4.0.14(@types/node@24.10.1)(jiti@2.6.1)(jsdom@27.2.0)(lightningcss@1.30.2)(msw@2.7.0(@types/node@24.10.1)(typescript@5.9.3))(yaml@2.8.1))
+      '@iconify-json/lucide':
+        specifier: ^1.2.79
+        version: 1.2.79
+      '@tsconfig/node22':
+        specifier: ^22.0.5
+        version: 22.0.5
       '@tsconfig/node24':
         specifier: catalog:dev
         version: 24.0.3
@@ -787,6 +781,9 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
+  '@iconify-json/lucide@1.2.79':
+    resolution: {integrity: sha512-CcwoXfC2Y7UVW0PXopmXtB4Do/eUJkhAqQqOnVENEiw3FwU707TK4uyIUqdo9tlvBaFBl95wnJf3smqsTnSyKA==}
+
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
@@ -1157,6 +1154,9 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
+
+  '@tsconfig/node22@22.0.5':
+    resolution: {integrity: sha512-hLf2ld+sYN/BtOJjHUWOk568dvjFQkHnLNa6zce25GIH+vxKfvTgm3qpaH6ToF5tu/NN0IH66s+Bb5wElHrLcw==}
 
   '@tsconfig/node24@24.0.3':
     resolution: {integrity: sha512-vcERKtKQKHgzt/vfS3Gjasd8SUI2a0WZXpgJURdJsMySpS5+ctgbPfuLj2z/W+w4lAfTWxoN4upKfu2WzIRYnw==}
@@ -2632,14 +2632,6 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
-
-  lucide-vue-next@0.554.0:
-    resolution: {integrity: sha512-nDchDVm/J3mv+7aYtDh7aLkeBVtzDNyaelKEOlhAE0MKMtDfB9fFatx2siqZUBYhLHjMK5DZnaAC/ODT9vQ63Q==}
-    peerDependencies:
-      vue: '>=3.0.1'
-
-  lucide@0.554.0:
-    resolution: {integrity: sha512-heltqxp+r6FbXs5FKMwARbE9aiDLLz9rlAlOU48NYHU4nWi2oVkQIz+Uv7LHZNsFVfgtgLBv7VOjM7QUvT6F3A==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -4390,6 +4382,10 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
+  '@iconify-json/lucide@1.2.79':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify/types@2.0.0': {}
 
   '@iconify/utils@3.1.0':
@@ -4672,6 +4668,8 @@ snapshots:
       espree: 10.4.0
       estraverse: 5.3.0
       picomatch: 4.0.3
+
+  '@tsconfig/node22@22.0.5': {}
 
   '@tsconfig/node24@24.0.3': {}
 
@@ -6317,12 +6315,6 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
-
-  lucide-vue-next@0.554.0(vue@3.5.25(typescript@5.9.3)):
-    dependencies:
-      vue: 3.5.25(typescript@5.9.3)
-
-  lucide@0.554.0: {}
 
   magic-string@0.30.21:
     dependencies:

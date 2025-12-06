@@ -1,61 +1,62 @@
-import type { RouteRecordRaw } from 'vue-router'
-import LayoutDefault from '@/shared/ui/layouts/presets/default'
+import LayoutDefault from '@/widgets/layouts/presets/default'
+import LayoutInnerLink from '@/widgets/layouts/presets/inner-link'
+import LayoutParentView from '@/widgets/layouts/presets/parent-view'
 
-export const routes: RouteRecordRaw[] = [
+export const constantRoutes = [
   {
-    path: '/',
-    redirect: '/home',
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/pages/login').then(m => m.LoginPage),
-    meta: {
-      title: '登录',
-      requiresAuth: false,
-    },
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import('@/pages/register').then(m => m.RegisterPage),
-    meta: {
-      title: '注册',
-      requiresAuth: false,
-    },
-  },
-  {
-    path: '/',
-    component: LayoutDefault,
-    meta: {
-      title: '首页',
-      requiresAuth: true,
-    },
+    path: '/home',
+    component: LayoutDefault, // 使用字符串标识，避免直接导入
+    mergeSingleChild: true,
     children: [
       {
-        path: 'home',
+        path: '',
         name: 'Home',
-        component: () => import('@/pages/home').then(m => m.HomePage),
-        meta: {
-          title: '首页',
-        },
-      },
-      {
-        path: 'about',
-        name: 'About',
-        component: () => import('@/pages/about').then(m => m.AboutPage),
-        meta: {
-          title: '关于',
-        },
+        component: () => import('@/pages/home/home-page'),
+        meta: { title: '首页', icon: 'shell', affix: true },
       },
     ],
   },
   {
+    path: '/login',
+    name: 'Login',
+    hidden: true,
+    component: () => import('@/pages/login/login-page'),
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    hidden: true,
+    component: () => import('@/pages/register/register-page'),
+  },
+  {
     path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: () => import('@/pages/error').then(m => m.NotFoundPage),
-    meta: {
-      title: '页面未找到',
-    },
+    hidden: true,
+    component: () => import('@/pages/error/404-page'),
+  },
+  {
+    path: '/401',
+    name: '401',
+    hidden: true,
+    component: () => import('@/pages/error/401-page'),
+  },
+]
+
+export const permissionRoutes = [
+  {
+    path: '/about',
+    name: 'About',
+    component: LayoutDefault,
+    mergeSingleChild: true,
+    children: [
+      {
+        path: '',
+        name: 'AboutBase',
+        component: () => import('@/pages/about/about-page'),
+        meta: {
+          title: '关于',
+          icon: 'user-search',
+        },
+      },
+    ],
   },
 ]

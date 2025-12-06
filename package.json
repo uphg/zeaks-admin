@@ -22,14 +22,14 @@
   },
   "dependencies": {
     "@vueuse/core": "catalog:prod",
-    "lucide": "catalog:prod",
-    "lucide-vue-next": "catalog:prod",
     "naive-ui": "catalog:prod",
     "vue": "catalog:prod",
     "vue-router": "catalog:prod"
   },
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
+    "@iconify-json/lucide": "^1.2.79",
+    "@tsconfig/node22": "^22.0.5",
     "@tsconfig/node24": "catalog:dev",
     "@types/jsdom": "catalog:dev",
     "@types/lodash-es": "catalog:dev",

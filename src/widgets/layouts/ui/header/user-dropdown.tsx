@@ -3,8 +3,10 @@ import IconFileText from '~icons/lucide/file-text'
 import IconGithub from '~icons/lucide/github'
 import IconLogOut from '~icons/lucide/log-out'
 import IconUser from '~icons/lucide/user'
-import { useLogout } from '@/hooks/use-logout'
-import { useUserStore } from '@/stores/user'
+import { useLogout } from '@/entities/user/model/use-logout'
+import { useUserStore } from '@/entities/user/model/use-user-store'
+import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 
 const UserDropdown = defineComponent({
   setup() {

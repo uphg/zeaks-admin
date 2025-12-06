@@ -1,4 +1,4 @@
-import { defineComponent, ref } from '@/shared/ui/vue-imports'
+import { defineComponent, ref } from 'vue'
 const XInput = defineComponent({
   name: 'XInput',
   props: {

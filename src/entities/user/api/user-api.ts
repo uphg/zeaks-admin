@@ -1,39 +1,32 @@
-import type { User } from '@/shared/lib/utility-types'
-import { http } from '@/shared/api'
+import { http } from '@/shared/api/http-client'
 
-export interface LoginRequest {
+interface RouteData {
+  name: string
+  path: string
+  hidden: boolean
+  redirect: string
+  component: 'Default' | 'ParentView'
+  mergeSingleChild: true
+  children: RouteData[]
+}
+
+export function apiGetRouteData() {
+  return http.get<RouteData[]>('/api/route-data')
+}
+
+export function apiGetUserInfo() {
+  return http.get<Partial<{
+    id: string
+    name: string
+    rules: string[]
+    email: string
+    token: string
+  }>>('/api/user-info')
+}
+
+export function apiLogin(data: {
   username: string
   password: string
-}
-
-export interface LoginResponse {
-  token: string
-  user: User
-}
-
-export interface RegisterRequest {
-  username: string
-  password: string
-  email?: string
-}
-
-export interface RegisterResponse {
-  token: string
-  user: User
-}
-
-export function login(data: LoginRequest) {
-  return http.post<{ token: string; user: User }>('/auth/login', data)
-}
-
-export function register(data: RegisterRequest) {
-  return http.post<{ token: string; user: User }>('/auth/register', data)
-}
-
-export function getUserInfo() {
-  return http.get<User>('/auth/user-info')
-}
-
-export function updateUserInfo(data: Partial<User>) {
-  return http.put<User>('/auth/user-info', data)
+}) {
+  return http.post<any>('/api/login', data)
 }

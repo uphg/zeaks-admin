@@ -58,7 +58,7 @@ export interface MenuMatch {
 // 业务相关
 export interface User {
   id: string
-  username: string
+  name: string
   email?: string
   avatar?: string
   roles?: string[]

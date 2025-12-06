@@ -3,8 +3,8 @@ import type { RenderFunction } from 'vue'
 import type { ClassValue } from 'clsx'
 import { pick } from 'lodash-es'
 import { NButton, NModal, NScrollbar } from 'naive-ui'
-import { X } from 'lucide-vue-next'
-import { mergeClass } from '@/shared/lib'
+// import { X } from 'lucide-vue-next'
+import { mergeClass } from '@/shared/lib/merge-class'
 import { PureButton } from '../pure-button'
 
 const defaultClass = {
@@ -91,7 +91,7 @@ const Modal = defineComponent({
                   onClick={handleClose}
                   class="ml-2"
                 >
-                  <X class="h-4.5 w-4.5" />
+                  {/* <X class="h-4.5 w-4.5" /> */}
                 </PureButton>
               )}
             </div>

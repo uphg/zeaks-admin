@@ -1,4 +1,4 @@
-import { defineComponent } from '@/shared/ui/vue-imports'
+import { defineComponent } from 'vue'
 
 const AboutPage = defineComponent({
   name: 'AboutPage',

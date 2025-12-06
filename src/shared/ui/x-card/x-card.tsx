@@ -1,4 +1,4 @@
-import { defineComponent, computed, type ClassNameValue } from '@/shared/ui/vue-imports'
+import { defineComponent, computed, type ClassNameValue } from 'vue'
 import { mergeClass } from '@/shared/lib'
 
 const defaultClass = {

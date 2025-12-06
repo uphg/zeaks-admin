@@ -1,4 +1,4 @@
-import { defineComponent, ref } from '@/shared/ui/vue-imports'
+import { defineComponent, ref } from 'vue'
 import type { FormInst, FormRules } from 'naive-ui'
 import { NForm } from 'naive-ui'
 
