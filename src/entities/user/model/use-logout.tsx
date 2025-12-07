@@ -1,20 +1,18 @@
-import { useDialog } from 'naive-ui'
 import { useRouter } from 'vue-router'
-import { permState } from '@/app/router/guards/permission-state'
-import { useSidebarStore } from '@/widgets/layouts/ui/sidebar/use-sidebar-store'
+import { useSidebarStore } from '@/shared/ui/layouts/sidebar/use-sidebar-store'
 import { useUserStore } from './use-user-store'
 import { removeToken } from '@/shared/lib/token'
+import { $dialog } from '@/shared/lib/ui-helpers/discrete-api'
 
 export function useLogout() {
   const router = useRouter()
-  const dialog = useDialog()
   const userStore = useUserStore()
   const sidebarStore = useSidebarStore()
 
   const logout = async (showConfirm = true) => {
     if (showConfirm) {
       return new Promise<void>((resolve, reject) => {
-        dialog.warning({
+        $dialog.warning({
           title: '退出登录',
           content: '确定要退出登录吗？',
           positiveText: '确定',
@@ -49,7 +47,7 @@ export function useLogout() {
       sidebarStore.clear()
 
       // 4. 重置权限状态
-      permState.resetPerm()
+      // permState.resetPerm()
 
       // 5. 跳转到登录页
       await router.push('/login')

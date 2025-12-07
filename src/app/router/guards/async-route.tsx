@@ -1,6 +1,9 @@
-import type { Component } from 'vue'
 import type { JSX } from 'vue/jsx-runtime'
-import type { LayoutType } from '@/widgets/layouts/layouts'
+import type { LayoutType } from '@/shared/ui/layouts/layouts'
+import { h, type Component } from 'vue'
+import { layouts } from '@/shared/ui/layouts/layouts'
+import { NIcon } from 'naive-ui'
+import { cloneJSON } from '@/shared/lib/clone-json'
 import IconArrowUpRight from '~icons/lucide/arrow-up-right'
 import IconAudioWaveform from '~icons/lucide/audio-waveform'
 import IconGlobe from '~icons/lucide/globe'
@@ -12,7 +15,7 @@ import IconTable from '~icons/lucide/table'
 import IconUser from '~icons/lucide/user'
 import IconUserCog from '~icons/lucide/user-cog'
 import IconUserSearch from '~icons/lucide/user-search'
-import { layouts } from '@/widgets/layouts/layouts'
+
 
 const pagesModule = import.meta.glob('@/pages/**/*-page.tsx')
 
@@ -149,16 +152,8 @@ function getOnlyChildMenu(route: any) {
 }
 
 function pathJoin(paths: string[]) {
-  const validPaths = paths.filter(isUnnil)
+  const validPaths = paths.filter((value) => !!value)
   return validPaths.length > 0 ? `/${validPaths.join('/').replace(/^\//, '')}` : '/'
-}
-
-function isUnnil(value: any): value is string {
-  return value !== undefined && value !== null && value !== ''
-}
-
-function cloneJSON<T extends object>(json: T): T {
-  return JSON.parse(JSON.stringify(json))
 }
 
 /**
@@ -181,16 +176,8 @@ function createIconsMap(iconsMap: Record<string, Component>) {
   const icons = Object.entries(iconsMap)
   const result: Record<string, () => JSX.Element> = {}
   for (const [key, value] of icons) {
-    result[key] = createRenderIcon(value)
+    result[key] = () => (<NIcon>{h(value)}</NIcon>)
   }
 
   return result
-}
-
-function createRenderIcon(icon: Component) {
-  return () => (
-    <NIcon>
-      {h(icon)}
-    </NIcon>
-  )
 }

@@ -16,7 +16,6 @@ const LoginPage = defineComponent({
     const formRef = ref<FormInst>()
     const loading = ref(false)
     const router = useRouter()
-
     const rules = {
       username: [
         { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -26,18 +25,17 @@ const LoginPage = defineComponent({
       ],
     }
 
-    const handleLogin = () => {
-      formRef.value?.validate(async (errors) => {
-        if (errors) return
-        loading.value = true
-        try {
-          const response = await apiLogin(loginForm.value)
-          setToken(response?.data.token)
-          router.push('/home')
-        } finally {
-          loading.value = false
-        }
-      })
+    async function onLoginClick() {
+      console.log('Login clicked')
+      const { warnings } = await formRef.value?.validate()!
+      console.log('Login form validation errors:', warnings)
+      if (warnings) return
+      loading.value = true
+      const response = await apiLogin(loginForm.value).finally(() => loading.value = false)
+      console.log('response')
+      console.log(response)
+      setToken(response?.token)
+      router.push('/home')
     }
 
     return () => (
@@ -63,7 +61,7 @@ const LoginPage = defineComponent({
                 type="primary"
                 size="large"
                 loading={loading.value}
-                onClick={handleLogin}
+                onClick={onLoginClick}
               >
                 登录
               </NButton>

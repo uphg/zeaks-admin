@@ -1,6 +1,6 @@
 import { defineComponent, computed, type PropType } from 'vue'
 import type { ClassValue } from 'clsx'
-import { mergeClass } from '@/shared/lib'
+import { mergeClass } from '@/shared/lib/merge-class'
 
 interface SwitchProps {
   value?: boolean

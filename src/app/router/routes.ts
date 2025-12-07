@@ -1,6 +1,6 @@
-import LayoutDefault from '@/widgets/layouts/presets/default'
-import LayoutInnerLink from '@/widgets/layouts/presets/inner-link'
-import LayoutParentView from '@/widgets/layouts/presets/parent-view'
+import LayoutDefault from '@/shared/ui/layouts/presets/default'
+import LayoutInnerLink from '@/shared/ui/layouts/presets/inner-link'
+import LayoutParentView from '@/shared/ui/layouts/presets/parent-view'
 
 export const constantRoutes = [
   {
@@ -41,6 +41,7 @@ export const constantRoutes = [
   },
 ]
 
+// 使用本地路由
 export const permissionRoutes = [
   {
     path: '/about',

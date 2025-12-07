@@ -1,5 +1,5 @@
 import { defineComponent, type PropType } from 'vue'
-import { mergeClass } from '@/shared/lib'
+import { mergeClass } from '@/shared/lib/merge-class'
 
 const PureButton = defineComponent({
   props: {

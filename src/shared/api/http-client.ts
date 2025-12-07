@@ -1,5 +1,3 @@
-
-
 export interface HTTPConfig {
   baseURL?: string
   timeout?: number

@@ -1,5 +1,5 @@
 import { defineComponent, computed, type ClassNameValue } from 'vue'
-import { mergeClass } from '@/shared/lib'
+import { mergeClass } from '@/shared/lib/merge-class'
 
 const defaultClass = {
   wrap: 'bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden',

@@ -15,7 +15,7 @@ export default defineConfig(() => ({
       autoInstall: true,
       compiler: 'vue3',
       customCollections: {
-        local: FileSystemIconLoader('./src/assets/icons'),
+        local: FileSystemIconLoader('./src/shared/assets/icons'),
       },
     })
   ],

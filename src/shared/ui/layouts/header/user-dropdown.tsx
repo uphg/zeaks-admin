@@ -5,12 +5,12 @@ import IconLogOut from '~icons/lucide/log-out'
 import IconUser from '~icons/lucide/user'
 import { useLogout } from '@/entities/user/model/use-logout'
 import { useUserStore } from '@/entities/user/model/use-user-store'
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
 const UserDropdown = defineComponent({
   setup() {
-    const userStore = useUserStore()
+    const { user } = useUserStore()
     const { logout } = useLogout()
     const router = useRouter()
 
@@ -64,11 +64,11 @@ const UserDropdown = defineComponent({
     }
 
     const avatarSrc = computed(() => {
-      return userStore.avatar || 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
+      return user.value?.avatar || 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
     })
 
     const userName = computed(() => {
-      return userStore.name || '用户'
+      return user.value?.name || '用户'
     })
 
     return () => (

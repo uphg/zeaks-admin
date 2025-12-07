@@ -1,8 +1,8 @@
 import { NScrollbar } from 'naive-ui'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
-import LayoutHeader from '../ui/header/header'
-import LayoutSidebar from '../ui/sidebar/sidebar'
+import LayoutHeader from '../header/header'
+import LayoutSidebar from '../sidebar/sidebar'
 
 const LayoutDefault = defineComponent(() => {
   return () => (

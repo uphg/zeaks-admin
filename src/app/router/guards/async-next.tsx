@@ -11,11 +11,10 @@ import { watch } from 'vue'
 
 const guestRoutes: (string | symbol)[] = ['Login']
 const publicRoutes: (string | symbol)[] = ['404', '403', '500']
-export const permState = createPermState()
 
 export function initRouterGuards(router: Router) {
   const { user, setUser, clear } = useUserStore()
-  const { setMenuMap, setMenus } = useSidebarStore()
+  const { setMenuMap, setMenus, menus } = useSidebarStore()
 
   let loadingPromise: Promise<void> | null = null
 
@@ -33,40 +32,35 @@ export function initRouterGuards(router: Router) {
         return true
       }
 
-      // 如果用户已登录且权限已加载
-      if (user.value?.id && permState.hasPerm) {
-        return true
-      }
-
       if (!token) {
         // 没有 token，重定向到登录页
         return '/login'
       }
 
-      // 如果有 token 但用户信息未加载
-      if (!user.value?.id) {
-        // 如果正在加载权限信息，等待加载完成
-        if (loadingPromise) {
+      // 如果有 token，需要检查是否需要加载权限和菜单
+      // 每次刷新页面后，user.value?.id 可能为空，但菜单数据也需要重新加载
+      // 所以我们不能仅仅依赖 user.value?.id 来判断
+      
+      // 如果正在加载权限信息，等待加载完成
+      if (loadingPromise) {
+        await loadingPromise
+        return { ...to, replace: true }
+      }
+
+      // 检查是否需要加载权限和菜单
+      // 条件：用户信息不存在 或者 菜单数据为空
+      if (!user.value?.id || !menus.value || menus.value.length === 0) {
+        loadingPromise = loadPermissionInfo(router, { setUser, setMenuMap, setMenus })
+
+        try {
           await loadingPromise
+          // 权限信息加载完成后，重新导航到目标路由
           return { ...to, replace: true }
-        }
-
-        // 加载用户信息和权限
-        if (!permState.hasPerm) {
-          loadingPromise = loadPermissionInfo(router, { setUser, setMenuMap, setMenus})
-
-          try {
-            await loadingPromise
-            permState.hasPerm = true
-            // 权限信息加载完成后，重新导航到目标路由
-            return { ...to, replace: true }
-          } catch (error) {
-            // 加载失败时清除状态
-            permState.hasPerm = false
-            throw error
-          } finally {
-            loadingPromise = null
-          }
+        } catch (error) {
+          // 加载失败时清除状态
+          throw error
+        } finally {
+          loadingPromise = null
         }
       }
 
@@ -75,7 +69,6 @@ export function initRouterGuards(router: Router) {
       console.error('Router guard error:', error)
       // 发生错误时清除用户状态并跳转到登录页
       clear()
-      permState.hasPerm = false
       loadingPromise = null
 
       if (to.name !== 'Login') {
@@ -85,11 +78,10 @@ export function initRouterGuards(router: Router) {
     }
   })
 
-  // 监听用户登出，重置权限加载状态
+  // 监听用户登出
   watch(() => user.value?.id, (newId, oldId) => {
     if (oldId && !newId) {
-      // 用户登出时重置状态
-      permState.resetPerm()
+      // 用户登出时，可以在这里执行清理操作
     }
   })
 }
@@ -106,12 +98,18 @@ async function loadPermissionInfo(
     setMenus(menus)
     setUser(userInfo as any)
 
+    // 先清除之前可能添加的动态路由（避免重复添加）
+    // 注意：这里假设你有办法识别和移除动态添加的路由
+    // 如果无法直接移除，可以重新设置路由，或者记录已添加的路由
+    
     // 添加动态路由
     routes.forEach((route) => {
       if (!isLinkRoute(route)) {
         router.addRoute(route)
       }
     })
+    
+    console.log('动态路由添加完成')
   } catch (error) {
     console.error('Failed to load permission info:', error)
     // 清除无效的 token
@@ -134,27 +132,11 @@ async function fetchUserAuthAndRoutes() {
   const menuData = [...constantRoutes, ...routes] // 使用展开运算符替代 concat
 
   const { menus, menusMap } = createSidebarMenus(menuData)
-  console.log('routes')
+  console.log('刷新后重新获取的 routes')
   console.log(routes)
-  console.log('menus')
+  console.log('刷新后重新获取的 menus')
   console.log(menus)
   return { userInfo: userInfoRes.data, routes, menus, menusMap }
 }
 
-function createPermState() {
-  // 使用 sessionStorage 持久化权限状态
-  const STORAGE_KEY = 'router_permission_loaded'
-  
-  return {
-    get hasPerm() {
-      return sessionStorage.getItem(STORAGE_KEY) === 'true'
-    },
-    set hasPerm(value: boolean) {
-      sessionStorage.getItem(STORAGE_KEY) === 'true'
-      sessionStorage.setItem(STORAGE_KEY, value.toString())
-    },
-    resetPerm() {
-      sessionStorage.removeItem(STORAGE_KEY)
-    }
-  }
-}
+// 移除了 createPermState 函数，因为不再需要 sessionStorage 存储权限状态

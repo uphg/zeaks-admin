@@ -2,7 +2,7 @@ import type { MenuMatch } from '@/shared/lib/utility-types'
 import { NBreadcrumb, NBreadcrumbItem, NDropdown } from 'naive-ui'
 import { computed, defineComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useSidebarStore } from '@/widgets/layouts/ui/sidebar/use-sidebar-store'
+import { useSidebarStore } from '../sidebar/use-sidebar-store'
 
 interface BreadcrumbItem {
   label: string

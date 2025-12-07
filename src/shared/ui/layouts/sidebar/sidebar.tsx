@@ -1,30 +1,30 @@
 import type { MenuOption } from 'naive-ui'
 import type { RouteLocationRaw } from 'vue-router'
-import type { MenuItem } from '@/types/menu'
+import type { MenuItem } from '@/shared/lib/utility-types'
 import { NMenu, NScrollbar } from 'naive-ui'
-import { Transition } from 'vue'
-import { RouterLink } from 'vue-router'
+import { defineComponent, h, ref, Transition, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import IconLogo from '~icons/local/logo'
-import { useSidebarStore } from '@/stores/sidebar'
+import { useSidebarStore } from './use-sidebar-store'
 
 const LayoutSidebar = defineComponent(() => {
-  const sidebar = useSidebarStore()
+  const { collapsed, menus } = useSidebarStore()
   const expandedKeys = ref<string[]>([])
   const selectedKey = ref<string | undefined>()
   const route = useRoute()
   watch(() => route.fullPath, handleMenuExpand)
-  watch(() => sidebar.menus, () => handleMenuExpand(), { immediate: true, deep: true })
+  watch(() => menus.value, () => handleMenuExpand(), { immediate: true, deep: true })
 
   handleMenuExpand()
 
   function handleMenuExpand() {
     const { path } = route
 
-    const matchedMenuItem = findMenuItemByPath(sidebar.menus, path)
+    const matchedMenuItem = findMenuItemByPath(menus.value, path)
     if (matchedMenuItem) {
       selectedKey.value = matchedMenuItem.key as string
 
-      const expandKeys = getParentKeys(sidebar.menus, matchedMenuItem.key as string)
+      const expandKeys = getParentKeys(menus.value, matchedMenuItem.key as string)
       expandedKeys.value = expandKeys
     }
   }
@@ -62,13 +62,13 @@ const LayoutSidebar = defineComponent(() => {
 
   return () => (
     <div class={['h-full border-r-1 border-r-gray-200']}>
-      <div class={['h-full flex flex-col transition-width', sidebar.collapsed ? 'w-16' : 'w-60']}>
-        <div class={['h-15 border-b-1 border-b-gray-200 overflow-hidden', sidebar.collapsed ? 'w-16' : 'w-60']}>
-          <div class={['flex gap-2 h-15 items-center transition-spacing duration-250 relative', sidebar.collapsed ? 'px-4' : 'px-3']}>
+      <div class={['h-full flex flex-col transition-width', collapsed.value ? 'w-16' : 'w-60']}>
+        <div class={['h-15 border-b-1 border-b-gray-200 overflow-hidden', collapsed.value ? 'w-16' : 'w-60']}>
+          <div class={['flex gap-2 h-15 items-center transition-spacing duration-250 relative', collapsed.value ? 'px-4' : 'px-3']}>
             <IconLogo />
             <div class="w-20 left-13 absolute">
               <Transition name="fade">
-                {sidebar.collapsed ? null : <span class="font-size-4.5">Vue Best</span>}
+                {collapsed.value ? null : <span class="font-size-4.5">Vue Best</span>}
               </Transition>
             </div>
           </div>
@@ -79,8 +79,8 @@ const LayoutSidebar = defineComponent(() => {
             collapsedIconSize={22}
             v-model:value={selectedKey.value}
             v-model:expanded-keys={expandedKeys.value}
-            collapsed={sidebar.collapsed}
-            options={sidebar.menus as MenuOption[]}
+            collapsed={collapsed.value}
+            options={menus.value as MenuOption[]}
             value={selectedKey.value}
             default-value={selectedKey.value}
             render-label={renderMenuLabel}

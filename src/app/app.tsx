@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import { installNaiveUI } from './providers'
 import { router } from './router/router'
 import './styles'
 
@@ -14,9 +13,6 @@ export function createVueApp() {
       )
     },
   })
-
-  // // 设置 NaiveUI
-  installNaiveUI(app)
 
   // 使用路由
   app.use(router)
