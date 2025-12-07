@@ -11,9 +11,9 @@ export interface Interceptor<T = any> {
   onRejected?: (error: any) => any
 }
 
-export interface Interceptors {
+export interface Interceptors<Res extends any = any> {
   request?: Interceptor<HTTPConfig>
-  response?: Interceptor<HTTPResponse>
+  response?: Interceptor<Res>
 }
 
 export interface HTTPResponse<T = any> {
@@ -78,7 +78,7 @@ export class HTTPClient {
     url: string,
     data?: any,
     config: HTTPConfig = {},
-  ): Promise<HTTPResponse<T>> {
+  ): Promise<T> {
     // 合并配置
     const finalConfig: HTTPConfig = {
       ...config,
@@ -184,7 +184,7 @@ export class HTTPClient {
         }
       }
 
-      return httpResponse
+      return httpResponse as T
     } catch (error: any) {
       clearTimeout(timeoutId)
 
@@ -204,31 +204,31 @@ export class HTTPClient {
     }
   }
 
-  async get<T, Params extends DefaultParams = {}>(url: string, params?: Params, config?: HTTPConfig): Promise<HTTPResponse<T>> {
+  async get<T, Params extends DefaultParams = {}>(url: string, params?: Params, config?: HTTPConfig): Promise<T> {
     return this.request<T>('GET', url, undefined, { ...config, params })
   }
 
-  async post<T, Data extends DefaultParams = {}>(url: string, data?: Data, config?: HTTPConfig): Promise<HTTPResponse<T>> {
+  async post<T, Data extends DefaultParams = {}>(url: string, data?: Data, config?: HTTPConfig): Promise<T> {
     return this.request<T>('POST', url, data, config)
   }
 
-  async put<T, Data extends DefaultParams = {}>(url: string, data?: Data, config?: HTTPConfig): Promise<HTTPResponse<T>> {
+  async put<T, Data extends DefaultParams = {}>(url: string, data?: Data, config?: HTTPConfig): Promise<T> {
     return this.request<T>('PUT', url, data, config)
   }
 
-  async delete<T>(url: string, config?: HTTPConfig): Promise<HTTPResponse<T>> {
+  async delete<T>(url: string, config?: HTTPConfig): Promise<T> {
     return this.request<T>('DELETE', url, undefined, config)
   }
 
-  async head<T>(url: string, config?: HTTPConfig): Promise<HTTPResponse<T>> {
+  async head<T>(url: string, config?: HTTPConfig): Promise<T> {
     return this.request<T>('HEAD', url, undefined, config)
   }
 
-  async options<T>(url: string, config?: HTTPConfig): Promise<HTTPResponse<T>> {
+  async options<T>(url: string, config?: HTTPConfig): Promise<T> {
     return this.request<T>('OPTIONS', url, undefined, config)
   }
 
-  async patch<T, Data extends DefaultParams = {}>(url: string, data?: Data, config?: HTTPConfig): Promise<HTTPResponse<T>> {
+  async patch<T, Data extends DefaultParams = {}>(url: string, data?: Data, config?: HTTPConfig): Promise<T> {
     return this.request<T>('PATCH', url, data, config)
   }
 }
@@ -268,3 +268,42 @@ export const http = new HTTPClient({
     },
   },
 })
+
+// class ApiError extends Error {
+//   constructor(
+//     public code: number,
+//     message: string,
+//     public originalError?: any,
+//     public data?: any
+//   ) {
+//     super(message);
+//     this.name = 'ApiError';
+//   }
+// }
+
+
+// function transformResError(error: any): ApiError {
+//   if (!error.response) {
+//     return new ApiError(-2, '网络连接失败', error);
+//   }
+  
+//   const status = error.response.status;
+//   const data = error.response.data;
+  
+//   switch (status) {
+//     case 400:
+//       return new ApiError(400, data.message || '请求参数错误', error, data);
+//     case 401:
+//       return new ApiError(401, '请重新登录', error, data);
+//     case 403:
+//       return new ApiError(403, '没有权限访问', error, data);
+//     case 404:
+//       return new ApiError(404, '资源不存在', error, data);
+//     case 429:
+//       return new ApiError(429, '请求过于频繁', error, data);
+//     case 500:
+//       return new ApiError(500, '服务器内部错误', error, data);
+//     default:
+//       return new ApiError(status, data.message || '请求失败', error, data);
+//   }
+// }

@@ -40,6 +40,7 @@ const iconsMap = createIconsMap({
  */
 export function createAsyncRoutes(data: any[]) {
   const routes = cloneJSON(data)
+  if (!routes) return
   return baseCreateRoutes(routes)
 }
 
@@ -93,6 +94,7 @@ function processRoutesForMenu(routes: any[]): any[] {
 
 export function createSidebarMenus(data: any[]) {
   const routes = cloneJSON(data)
+  if (!routes) return
   // 处理路由数据，将字符串组件标识转换为组件函数
   const processedRoutes = processRoutesForMenu(routes)
   const menusMap = new Map()
