@@ -1,4 +1,6 @@
-{
+import type { MockflyConfig } from 'mockfly'
+
+const config: MockflyConfig = {
   "port": 4001,
   "host": "localhost",
   "baseUrl": "/api",
@@ -29,6 +31,21 @@
       "method": "GET",
       "response": [
         {
+          "path": "/icon",
+          "component": "Default",
+          "mergeSingleChild": true,
+          "children": [
+            {
+              "path": "base",
+              "component": "icon/icon-page",
+              "meta": {
+                "title": "图标",
+                "icon": "audio-waveform"
+              }
+            }
+          ]
+        },
+        {
           "path": "/about",
           "component": "Default",
           "mergeSingleChild": true,
@@ -53,3 +70,5 @@
     }
   ]
 }
+
+export default config

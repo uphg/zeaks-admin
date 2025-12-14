@@ -16,7 +16,6 @@ import IconUser from '~icons/lucide/user'
 import IconUserCog from '~icons/lucide/user-cog'
 import IconUserSearch from '~icons/lucide/user-search'
 
-
 const pagesModule = import.meta.glob('@/pages/**/*-page.tsx')
 
 const iconsMap = createIconsMap({

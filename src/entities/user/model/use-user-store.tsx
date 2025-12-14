@@ -5,14 +5,27 @@ import { ref } from "vue";
 export type UserStore = ReturnType<typeof useUserStore>
 
 export const useUserStore = createStore(() => {
-  const user = ref<User | null>({});
-  const permsissions = ref<string[]>([]);
-  function setUser(value: User | null) {
-    console.log('userStore - value')
-    console.log(value)
-    user.value && Object.assign(user.value, value);
+  const user = ref<User | null>(null);
+  const permissions = ref<string[]>([]);
+  
+  function setUser(value: User | Partial<User> | null) {
+    if (value === null) {
+      user.value = null;
+    } else if (user.value === null) {
+      user.value = value as User;
+    } else {
+      Object.assign(user.value, value);
+    }
   }
-  function clear() {}
-  return { user, setUser, permsissions, clear };
+  
+  function setPermissions(value: string[]) {
+    permissions.value = value;
+  }
+  
+  function clear() {
+    user.value = null;
+    permissions.value = [];
+  }
+  return { user, setUser, permissions, setPermissions, clear };
 })
 

@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 
-const AboutPage = defineComponent(() => {
+const IconPage = defineComponent(() => {
   return () => (
     <div class="p-6">
       <h1 class="text-2xl font-bold mb-4">关于页面</h1>
@@ -18,4 +18,4 @@ const AboutPage = defineComponent(() => {
   )
 })
 
-export default AboutPage
+export default IconPage
