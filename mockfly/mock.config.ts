@@ -1,4 +1,5 @@
 import type { MockflyConfig } from 'mockfly'
+import { responseFile } from './utils.ts'
 
 const config: MockflyConfig = {
   "port": 4001,
@@ -29,44 +30,13 @@ const config: MockflyConfig = {
       "name": "获取路由数据",
       "path": "/route-data",
       "method": "GET",
-      "response": [
-        {
-          "path": "/icon",
-          "component": "Default",
-          "mergeSingleChild": true,
-          "children": [
-            {
-              "path": "base",
-              "component": "icon/icon-page",
-              "meta": {
-                "title": "图标",
-                "icon": "audio-waveform"
-              }
-            }
-          ]
-        },
-        {
-          "path": "/about",
-          "component": "Default",
-          "mergeSingleChild": true,
-          "children": [
-            {
-              "path": "base",
-              "component": "about/about-page",
-              "meta": {
-                "title": "关于",
-                "icon": "user-search"
-              }
-            }
-          ]
-        }
-      ]
+      "response": responseFile('./data/route-data.json')
     },
     {
       "name": "获取用户列表",
       "path": "/users",
       "method": "GET",
-      "responseFile": "users.json"
+      "response": responseFile('./data/users.json')
     }
   ]
 }

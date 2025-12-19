@@ -33,4 +33,3 @@ pnpm lint         # 代码质量检查
 ## Committing
 
 - ALWAYS use semantic commits (fix:, feat:, chore:, refactor:, docs:).
-- 不要在提交信息中生成 Claude 签名或 Crush 签名
