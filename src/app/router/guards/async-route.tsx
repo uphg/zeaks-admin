@@ -4,33 +4,11 @@ import { h, type Component } from 'vue'
 import { layouts } from '@/shared/ui/layouts/layouts'
 import { NIcon } from 'naive-ui'
 import { cloneJSON } from '@/shared/lib/clone-json'
-import IconArrowUpRight from '~icons/lucide/arrow-up-right'
-import IconAudioWaveform from '~icons/lucide/audio-waveform'
-import IconGlobe from '~icons/lucide/globe'
-import IconLayoutList from '~icons/lucide/layout-list'
-import IconLink from '~icons/lucide/link'
-import IconSettings from '~icons/lucide/settings'
-import IconShell from '~icons/lucide/shell'
-import IconTable from '~icons/lucide/table'
-import IconUser from '~icons/lucide/user'
-import IconUserCog from '~icons/lucide/user-cog'
-import IconUserSearch from '~icons/lucide/user-search'
+import { iconMap } from '@/shared/lib/icon-map'
 
 const pagesModule = import.meta.glob('@/pages/**/*-page.tsx')
 
-const iconsMap = createIconsMap({
-  'user-search': IconUserSearch,
-  'audio-waveform': IconAudioWaveform,
-  'arrow-up-right': IconArrowUpRight,
-  'settings': IconSettings,
-  'user': IconUser,
-  'user-cog': IconUserCog,
-  'layout-list': IconLayoutList,
-  'globe': IconGlobe,
-  'link': IconLink,
-  'shell': IconShell,
-  'table': IconTable,
-})
+const iconRenderMap = createIconRenderMap(iconMap)
 
 /**
  * 创建异步路由
@@ -114,7 +92,7 @@ function baseCreateMenus(routes: any[], menusMap: Map<string, any>, options?: { 
       key: name,
       path: newPath,
       type: 'item',
-      icon: meta?.icon && iconsMap?.[meta.icon],
+      icon: meta?.icon && iconRenderMap?.[meta.icon],
       show: hidden !== true,
       matchs: [...matchs, { meta, path, name }],
       ...rest,
@@ -173,8 +151,8 @@ function convertToPascalCase(arr: string[]): string {
     .join('')
 }
 
-function createIconsMap(iconsMap: Record<string, Component>) {
-  const icons = Object.entries(iconsMap)
+function createIconRenderMap(iconRenderMap: Record<string, Component>) {
+  const icons = Object.entries(iconRenderMap)
   const result: Record<string, () => JSX.Element> = {}
   for (const [key, value] of icons) {
     result[key] = () => (<NIcon>{h(value)}</NIcon>)

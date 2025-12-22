@@ -1,18 +1,26 @@
+import IconPicker from '@/features/icon-picker/icon-picker'
+import { iconMap } from '@/shared/lib/icon-map'
 import { defineComponent } from 'vue'
 
 const IconPage = defineComponent(() => {
+  const icons = Object.entries(iconMap)
   return () => (
     <div class="p-6">
-      <h1 class="text-2xl font-bold mb-4">关于页面</h1>
-      <p class="text-gray-600 mb-4">这是关于页面的内容。</p>
-      <div class="bg-white p-6 rounded-lg shadow-sm border">
-        <h2 class="text-lg font-semibold mb-3">项目信息</h2>
-        <ul class="list-disc pl-5 space-y-2">
-          <li>项目名称：Aur Admin</li>
-          <li>技术栈：Vue 3 + TypeScript + TSX</li>
-          <li>架构：FSD (Feature-Sliced Design)</li>
-          <li>UI库：Naive UI</li>
-        </ul>
+      <h1 class="text-2xl font-bold mb-4">图标</h1>
+      <h2>图标选择器</h2>
+      <div>
+        <IconPicker />
+      </div>
+      <h2>图标列表</h2>
+      <div class="flex justify-center">
+        <div class="flex flex-wrap gap-3">
+          {icons.map(([key, Icon]) => (
+            <div
+              class="w-14 h-14 border-rd-1.5 bg-gray-100 flex justify-center items-center cursor-pointer transition-colors duration-300 hover:bg-gray-200"
+              key={key}
+            ><Icon class="w-6 h-6" /></div>
+          ))}
+        </div>
       </div>
     </div>
   )
