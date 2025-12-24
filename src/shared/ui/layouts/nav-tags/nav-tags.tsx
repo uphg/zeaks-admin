@@ -9,6 +9,8 @@ const LayoutNavTags = defineComponent(() => {
   const { tags, active, append, remove, setActive } = useNavTagsStore()
   const route = useRoute()
   const router = useRouter()
+  console.log('tags.value')
+  console.log(tags.value)
 
   watch(
     () => route.name,
@@ -62,7 +64,7 @@ const LayoutNavTags = defineComponent(() => {
             <NavTag
               key={item.name}
               active={active.value === item.name}
-              closable={tags.value.length > 1}
+              closable={tags.value?.length > 1}
               onClick={() => onItemClick(item, index)}
               onClose={() => onItemClose(item, index)}
             >

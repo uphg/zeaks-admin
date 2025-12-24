@@ -1,8 +1,14 @@
 import LayoutDefault from '@/shared/ui/layouts/presets/default'
 import LayoutInnerLink from '@/shared/ui/layouts/presets/inner-link'
 import LayoutParentView from '@/shared/ui/layouts/presets/parent-view'
+import type { RouteRecordRaw } from 'vue-router'
 
 export const constantRoutes = [
+  {
+    path: '/',
+    redirect: '/home',
+    hidden: true,
+  },
   {
     path: '/home',
     component: LayoutDefault, // 使用字符串标识，避免直接导入

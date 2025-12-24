@@ -7,7 +7,7 @@ const XIconPicker = defineComponent({
     // 内置图标列表
     const icons = Object.entries(iconMap)
     const iconKey = ref(null)
-    const options = icons.map(([key, icon]) => ({ label: icon, value: key }))
+    const options = icons.map(([key, icon]) => ({ label: icon, value: key })) as any
 
     function renderLabel(option: SelectOption): VNodeChild{
       return (

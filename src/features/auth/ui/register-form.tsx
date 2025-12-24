@@ -2,7 +2,7 @@ import type { FormInst, FormRules } from 'naive-ui'
 import { NButton, NCard, NForm, NFormItem, NInput } from 'naive-ui'
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthStore } from '../model'
+import { useAuthStore } from '../model/use-auth-store'
 
 const RegisterForm = defineComponent({
   name: 'RegisterForm',
@@ -119,7 +119,7 @@ const RegisterForm = defineComponent({
         </NForm>
       </NCard>
     )
-  },
+  }
 })
 
 export default RegisterForm

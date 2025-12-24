@@ -1,7 +1,7 @@
 import { defineComponent, ref, computed, type PropType } from 'vue'
 import { mergeClass } from '@/shared/lib/merge-class'
 import { PureButton } from '../pure-button'
-// import { X } from 'lucide-vue-next'
+import X from '~icons/lucide/x'
 
 const XTag = defineComponent({
   props: {
@@ -102,7 +102,7 @@ const XTag = defineComponent({
         {slots.default?.()}
         {props.closable && (
           <PureButton class="ml-.5 p-.5 inline-flex cursor-pointer items-center" onClick={handleClose}>
-            {/* <X size={14} /> */}
+            <X size={14} />
           </PureButton>
         )}
       </div>

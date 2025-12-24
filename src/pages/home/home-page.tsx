@@ -2,24 +2,24 @@ import { defineComponent } from 'vue'
 
 const HomePage = defineComponent(() => {
   return () => (
-    <div class="p-6">
-      <h1 class="text-2xl font-bold mb-4">首页</h1>
-      <p class="text-gray-600 mb-6">欢迎使用 Aur Admin 管理后台系统！</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-lg shadow-sm border">
+    <div class="p-5">
+      <h1 class="text-2xl font-bold mb-3">首页</h1>
+      <p class="text-gray-600 mb-4">欢迎使用 Aur Admin 管理后台系统！</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="bg-white p-6 rounded-lg border-1 border-solid border-gray-200">
           <h3 class="text-lg font-semibold mb-2">系统信息</h3>
           <p class="text-gray-600">系统运行正常</p>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-sm border">
+        <div class="bg-white p-6 rounded-lg border-1 border-solid border-gray-200">
           <h3 class="text-lg font-semibold mb-2">用户统计</h3>
           <p class="text-gray-600">活跃用户：1</p>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-sm border">
+        <div class="bg-white p-6 rounded-lg border-1 border-solid border-gray-200">
           <h3 class="text-lg font-semibold mb-2">快速操作</h3>
           <p class="text-gray-600">查看系统状态</p>
         </div>
       </div>
-      <div class="mt-8 bg-white p-6 rounded-lg shadow-sm border">
+      <div class="mt-5 bg-white p-5 rounded-lg border-1 border-solid border-gray-200">
         <h3 class="text-lg font-semibold mb-4">最近活动</h3>
         <div class="space-y-3">
           {Array.from({ length: 5 }, (_, i) => (
