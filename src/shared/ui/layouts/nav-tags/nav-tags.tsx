@@ -53,7 +53,7 @@ const LayoutNavTags = defineComponent(() => {
   }
 
   return () => (
-    <div class="tags border-b-1 border-b-gray-200 w-full">
+    <div class="tags border-b-1 border-b-gray-200 w-full h-[var(--nav-tags-height)]">
       <div
         ref={tagsWrapRef}
         class="tags-wrapper flex w-full items-center overflow-auto"

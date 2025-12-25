@@ -20,7 +20,8 @@ body {
   --header-height: 60px;
   --sidebar-width: 240px;
   --sidebar-collapsed-width: 64px;
-  --nav-tag-height: 32px;
+  --nav-tags-height: 52px;
+  --page-height: calc(100vh - var(--header-height) - var(--nav-tags-height));
 }
 
 /* Transitions */
