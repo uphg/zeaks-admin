@@ -1,4 +1,4 @@
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
 
 const UserAccount = defineComponent(() => {
   return () => <div>User Account Component</div>

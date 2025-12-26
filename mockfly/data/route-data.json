@@ -6,10 +6,10 @@
     "children": [
       {
         "path": "base",
-        "component": "icon/icon-page",
+        "component": "icon/icon-page.tsx",
         "meta": {
           "title": "图标",
-          "icon": "audio-waveform"
+          "icon": "shell"
         }
       }
     ]
@@ -21,7 +21,7 @@
     "children": [
       {
         "path": "base",
-        "component": "about/about-page",
+        "component": "about/about-page.tsx",
         "meta": {
           "title": "关于",
           "icon": "user-search"
@@ -39,7 +39,7 @@
     "children": [
       {
         "path": "menu",
-        "component": "system/menu/menu-page",
+        "component": "system/menu/menu-page.tsx",
         "meta": {
           "title": "菜单管理",
           "icon": "menu"
@@ -47,7 +47,7 @@
       },
       {
         "path": "role",
-        "component": "system/role/role-page",
+        "component": "system/role/role-page.tsx",
         "meta": {
           "title": "角色管理",
           "icon": "users-round"
@@ -55,7 +55,7 @@
       },
       {
         "path": "user",
-        "component": "system/user/user-page",
+        "component": "system/user/user-page.tsx",
         "meta": {
           "title": "用户管理",
           "icon": "user-round"

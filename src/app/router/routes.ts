@@ -18,7 +18,7 @@ export const constantRoutes = [
         path: '',
         name: 'Home',
         component: () => import('@/pages/home/home-page'),
-        meta: { title: '首页', icon: 'shell', affix: true },
+        meta: { title: '首页', icon: 'house', affix: true },
       },
     ],
   },

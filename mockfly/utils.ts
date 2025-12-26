@@ -7,8 +7,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 export function responseFile(filePath: string) {
-  return () => {
-    const file = path.join(__dirname, filePath)
-    return fs.readFileSync(file, 'utf-8')
-  }
+  return () => readJsonFile(filePath)
+}
+
+export function readJsonFile(filePath: string) {
+  const file = path.join(__dirname, filePath)
+  return fs.readFileSync(file, 'utf-8')
 }

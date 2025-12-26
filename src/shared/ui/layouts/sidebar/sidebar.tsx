@@ -66,9 +66,9 @@ const LayoutSidebar = defineComponent(() => {
         <div class={['h-15 border-b-1 border-b-gray-200 overflow-hidden', collapsed.value ? 'w-16' : 'w-60']}>
           <div class={['flex gap-2 h-15 items-center transition-spacing duration-250 relative', collapsed.value ? 'px-4' : 'px-3']}>
             <IconLogo />
-            <div class="w-20 left-13 absolute">
+            <div class="w-40 left-13 absolute">
               <Transition name="fade">
-                {collapsed.value ? null : <span class="font-size-4.5">Vue Best</span>}
+                {collapsed.value ? null : <span class="font-size-4.5">Zeaks Admin</span>}
               </Transition>
             </div>
           </div>

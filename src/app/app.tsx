@@ -1,6 +1,8 @@
+import './styles'
 import { createApp } from 'vue'
 import { router } from './router/router'
-import './styles'
+import { NConfigProvider } from 'naive-ui'
+import { zhCN, dateZhCN } from 'naive-ui'
 
 // 创建 Vue 应用
 export function createVueApp() {
@@ -8,7 +10,9 @@ export function createVueApp() {
     setup() {
       return () => (
         <div id="app">
-          <router-view />
+          <NConfigProvider locale={zhCN} date-locale={dateZhCN}>
+            <router-view />
+          </NConfigProvider>
         </div>
       )
     },

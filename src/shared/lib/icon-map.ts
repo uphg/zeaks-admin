@@ -211,7 +211,7 @@ import Table from '~icons/lucide/table'
 
 export const iconMap = {
   // 导航&操作 (35个)
-  'home': House,
+  'house': House,
   'house-plus': HousePlus,
   'search': Search,
   'menu': Menu,

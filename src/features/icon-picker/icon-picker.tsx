@@ -1,8 +1,8 @@
-import { defineComponent, h, ref, type VNodeChild } from "vue"
+import { defineComponent, ref, type VNodeChild } from "vue"
 import { iconMap } from "@/shared/lib/icon-map"
 import { NSelect, type SelectOption } from "naive-ui"
 
-const XIconPicker = defineComponent({
+const IconPicker = defineComponent({
   setup() {
     // 内置图标列表
     const icons = Object.entries(iconMap)
@@ -29,4 +29,4 @@ const XIconPicker = defineComponent({
   }
 })
 
-export default XIconPicker
+export default IconPicker

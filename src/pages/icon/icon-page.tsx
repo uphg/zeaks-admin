@@ -6,12 +6,11 @@ const IconPage = defineComponent(() => {
   const icons = Object.entries(iconMap)
   return () => (
     <div class="p-6">
-      <h1 class="text-2xl font-bold mb-4">图标</h1>
-      <h2>图标选择器</h2>
+      <h2 class="text-lg font-semibold mb-3">图标选择器</h2>
       <div>
         <IconPicker />
       </div>
-      <h2>图标列表</h2>
+      <h2 class="text-lg font-semibold mb-3 mt-4">图标列表</h2>
       <div class="flex justify-center">
         <div class="flex flex-wrap gap-3">
           {icons.map(([key, Icon]) => (

@@ -26,14 +26,10 @@ const LoginPage = defineComponent({
     }
 
     async function onLoginClick() {
-      console.log('Login clicked')
       const { warnings } = await formRef.value?.validate()!
-      console.log('Login form validation errors:', warnings)
       if (warnings) return
       loading.value = true
       const response = await apiLogin(loginForm.value).finally(() => loading.value = false)
-      console.log('response')
-      console.log(response)
       setToken(response?.token)
       router.push('/home')
     }

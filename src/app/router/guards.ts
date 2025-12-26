@@ -5,8 +5,9 @@ import { apiGetRouteData, apiGetUserInfo } from '@/entities/user/api/user-api'
 import { useSidebarStore } from '@/shared/ui/layouts/sidebar/use-sidebar-store'
 import { useUserStore } from '@/entities/user/model/use-user-store'
 import { getToken, removeToken } from '@/shared/lib/token'
-import { constantRoutes } from '../routes'
-import { createAsyncRoutes, createSidebarMenus } from './async-route'
+import { constantRoutes } from './routes'
+import { createMenus } from '@/entities/menu/model/create-menus'
+import { createAsyncRoutes } from '@/shared/lib/routing'
 
 const guestRoutes: (string | symbol)[] = ['Login']
 
@@ -103,7 +104,7 @@ async function fetchUserAuthAndRoutes() {
   // const routes = permissionRoutes
   // const menuData = [...constantRoutes, ...routes] // 使用展开运算符替代 concat
 
-  const { menus, menusMap } = createSidebarMenus(menuData) ?? {}
+  const { menus, menusMap } = createMenus(menuData) ?? {}
   if (!menus?.length || !menusMap?.size) {
     throw new Error('菜单数据错误，请重新登录')
   }

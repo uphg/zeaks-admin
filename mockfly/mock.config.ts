@@ -1,5 +1,7 @@
 import type { MockflyConfig } from 'mockfly'
 import { responseFile } from './utils.ts'
+import { routeData } from './common.ts'
+import { responseMenus } from './lib/route-to-menu.ts'
 
 const config: MockflyConfig = {
   port: 4001,
@@ -30,7 +32,11 @@ const config: MockflyConfig = {
       name: '获取路由数据',
       path: '/route-data',
       method: 'GET',
-      response: responseFile('./data/route-data.json')
+      response: () => {
+        console.log('routeData')
+        console.log(routeData)
+        return routeData
+      }
     },
     // 用户管理
     {
@@ -129,115 +135,7 @@ const config: MockflyConfig = {
       name: '获取菜单列表',
       path: '/menus',
       method: 'GET',
-      response: [
-        {
-          id: '1',
-          name: '系统管理',
-          type: 'directory',
-          parent_id: '0',
-          path: '/system',
-          permission: 'system:view',
-          sort_order: 1,
-          visible: 1,
-          status: 1,
-          children: [
-            {
-              id: '2',
-              name: '菜单管理',
-              type: 'menu',
-              parent_id: '1',
-              path: '/system/menus',
-              permission: 'system:menu:view',
-              sort_order: 1,
-              visible: 1,
-              status: 1,
-              children: [
-                {
-                  id: '3',
-                  name: '新增菜单',
-                  type: 'button',
-                  parent_id: '2',
-                  path: '',
-                  permission: 'system:menu:add',
-                  sort_order: 1,
-                  visible: 1,
-                  status: 1
-                },
-                {
-                  id: '4',
-                  name: '编辑菜单',
-                  type: 'button',
-                  parent_id: '2',
-                  path: '',
-                  permission: 'system:menu:edit',
-                  sort_order: 2,
-                  visible: 1,
-                  status: 1
-                },
-                {
-                  id: '5',
-                  name: '删除菜单',
-                  type: 'button',
-                  parent_id: '2',
-                  path: '',
-                  permission: 'system:menu:delete',
-                  sort_order: 3,
-                  visible: 1,
-                  status: 1
-                }
-              ]
-            },
-            {
-              id: '6',
-              name: '角色管理',
-              type: 'menu',
-              parent_id: '1',
-              path: '/system/roles',
-              permission: 'system:role:view',
-              sort_order: 2,
-              visible: 1,
-              status: 1,
-              children: [
-                {
-                  id: '7',
-                  name: '分配权限',
-                  type: 'button',
-                  parent_id: '6',
-                  path: '',
-                  permission: 'system:role:assign',
-                  sort_order: 1,
-                  visible: 1,
-                  status: 1
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: '8',
-          name: '用户中心',
-          type: 'directory',
-          parent_id: '0',
-          path: '/user',
-          permission: 'user:view',
-          sort_order: 2,
-          visible: 1,
-          status: 1,
-          children: [
-            {
-              id: '9',
-              name: '个人中心',
-              type: 'menu',
-              parent_id: '8',
-              path: '/user/profile',
-              permission: 'user:profile:view',
-              sort_order: 1,
-              visible: 1,
-              status: 1
-            }
-          ]
-        }
-      ]
+      response: responseMenus()
     },
 
     // 新增菜单

@@ -11,3 +11,5 @@ export const LAYOUT_TYPES = {
 } as const
 
 export type LayoutType = typeof LAYOUT_TYPES[keyof typeof LAYOUT_TYPES]
+
+export const pageComponentMap = import.meta.glob('@/pages/**/*-page.{tsx,vue}')
