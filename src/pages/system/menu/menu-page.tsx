@@ -1,4 +1,4 @@
-import { NButton, NDescriptions, NDescriptionsItem, NTree } from 'naive-ui'
+import { NButton, NDescriptions, NDescriptionsItem, NInput, NTree } from 'naive-ui'
 import { defineComponent, ref, withModifiers, type FunctionalComponent } from 'vue'
 import { createTreeMap, findNodeById, type TreeNode, type TreeMap } from '@/shared/lib/tree-index'
 import type { TreeRenderProps } from 'naive-ui/es/tree/src/interface'
@@ -20,6 +20,7 @@ interface MenuItem extends TreeNode {
 }
 
 const MenuPage = defineComponent(() => {
+  const pattern =ref('')
   const menuData = ref<MenuItem[]>([])
   const selectedMenu = ref<MenuItem | null>(null)
   const defaultExpandedKeys = ref<string[]>(['system', 'icon', 'about'])
@@ -30,11 +31,22 @@ const MenuPage = defineComponent(() => {
 
   return () => (
     <div class="p-6 flex gap-5 h-[var(--page-height)]">
-      <div class="w-80">
-         <NTree
+      <div class="w-80 flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <h2>菜单树</h2>
+          <div class="flex gap-3">
+            <NButton type="primary" size="small">新增</NButton>
+            <NButton type="error" size="small">删除</NButton>
+          </div>
+        </div>
+        <div>
+          <NInput v-model:value={pattern.value} />
+        </div>
+        <NTree
           block-line
           data={menuData.value}
           v-model:selectedKeys={selectedKeys.value}
+          pattern={pattern.value}
           onUpdate:selectedKeys={handleSelectedKeysChange}
           defaultExpandedKeys={defaultExpandedKeys.value}
           renderLabel={renderLabel}
@@ -42,43 +54,50 @@ const MenuPage = defineComponent(() => {
           keyField="id"
           labelField="title"
           selectable
+          checkable
+          cascade
         />
       </div>
       <div class={['flex-1']}>
         {selectedMenu.value ? (
-          <NDescriptions
-            labelClass="w-20%"
-            contentClass="w-30%"
-            labelPlacement="left"
-            bordered
-            column={2}
-          >
-            <NDescriptionsItem label="名称">
-              {selectedMenu.value.title}
-            </NDescriptionsItem>
-            <NDescriptionsItem label="菜单图标">
-              {/* {selectedMenu.value.meta?.icon && selectedMenu.value.meta?.icon()} */}
-            </NDescriptionsItem>
-            <NDescriptionsItem label="路由地址" span={2}>
-              {selectedMenu.value.path}
-            </NDescriptionsItem>
-            <NDescriptionsItem label="组件路径" span={2}>
-              <ComponentPathPicker v-model:value={selectedMenu.value.component} />
-            </NDescriptionsItem>
+          <div>
+            <h2 class="mb-3">菜单详情</h2>
+            <NDescriptions
+              labelClass="w-20%"
+              contentClass="w-30%"
+              labelPlacement="left"
+              bordered
+              column={2}
+            >
+              <NDescriptionsItem label="名称">
+                {selectedMenu.value.title}
+              </NDescriptionsItem>
+              <NDescriptionsItem label="菜单图标">
+                {/* {selectedMenu.value.meta?.icon && selectedMenu.value.meta?.icon()} */}
+              </NDescriptionsItem>
+              <NDescriptionsItem label="路由地址" span={2}>
+                {selectedMenu.value.path}
+              </NDescriptionsItem>
+              <NDescriptionsItem label="组件路径" span={2}>
+                <ComponentPathPicker v-model:value={selectedMenu.value.component} />
+              </NDescriptionsItem>
 
-            <NDescriptionsItem label="布局">
-              苹果
-            </NDescriptionsItem>
-            <NDescriptionsItem label="是否在侧栏显示">
-              苹果
-            </NDescriptionsItem>
-            <NDescriptionsItem label="状态">
-              苹果
-            </NDescriptionsItem>
-            <NDescriptionsItem label="排序">
-              苹果
-            </NDescriptionsItem>
-          </NDescriptions>
+              <NDescriptionsItem label="布局">
+                苹果
+              </NDescriptionsItem>
+              <NDescriptionsItem label="是否在侧栏显示">
+                苹果
+              </NDescriptionsItem>
+              <NDescriptionsItem label="状态">
+                苹果
+              </NDescriptionsItem>
+              <NDescriptionsItem label="排序">
+                苹果
+              </NDescriptionsItem>
+            </NDescriptions>
+            <h2 class="mb-3 mt-5">按钮</h2>
+            <div>111222</div>
+          </div>
         ) : null}
       </div>
     </div>

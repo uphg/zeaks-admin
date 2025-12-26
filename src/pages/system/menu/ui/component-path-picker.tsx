@@ -17,7 +17,8 @@ const ComponentPathPicker = defineComponent({
         options={pathOptions}
         filterable
         clearable
-      />
+      >
+      </NSelect>
     )
 
     function onUpdateValue(value: string) {
