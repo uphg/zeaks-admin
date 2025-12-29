@@ -1,6 +1,6 @@
 import type { MockflyConfig } from 'mockfly'
 import { responseFile } from './utils.ts'
-import { routeData } from './common.ts'
+import { menuButtonsMap, routeData } from './common.ts'
 import { responseMenus } from './lib/route-to-menu.ts'
 
 const config: MockflyConfig = {
@@ -33,8 +33,6 @@ const config: MockflyConfig = {
       path: '/route-data',
       method: 'GET',
       response: () => {
-        console.log('routeData')
-        console.log(routeData)
         return routeData
       }
     },
@@ -182,6 +180,23 @@ const config: MockflyConfig = {
       path: '/menus/:id',
       method: 'DELETE',
       response: {}
+    },
+
+    // 获取指定菜单的按钮列表
+    {
+      name: '获取菜单按钮列表',
+      path: '/menus/:id/buttons',
+      method: 'GET',
+      response: (req) => {
+        const menuId = req.params.id as ('2' | '3' | 'default')
+        const buttons = menuButtonsMap[menuId] ?? menuButtonsMap['default']
+        return {
+          menuId: menuId,
+          data: buttons,
+          total: (buttons).length,
+          timestamp: new Date().toISOString()
+        }
+      }
     },
 
     // 获取角色菜单绑定

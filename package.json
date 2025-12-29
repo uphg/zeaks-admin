@@ -21,6 +21,7 @@
     "mock:init": "mockfly init"
   },
   "dependencies": {
+    "@vue/shared": "^3.5.26",
     "@vueuse/core": "catalog:prod",
     "naive-ui": "catalog:prod",
     "vue": "catalog:prod",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "catalog:dev",
     "@iconify-json/lucide": "1.2.79",
+    "@testing-library/vue": "^8.1.0",
     "@tsconfig/node22": "22.0.5",
     "@tsconfig/node24": "catalog:dev",
     "@types/jsdom": "catalog:dev",

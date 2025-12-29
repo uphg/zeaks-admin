@@ -1,5 +1,5 @@
 import type { MenuItem } from '@/shared/lib/utility-types'
-import { createStore } from '@/shared/alias/vue-use'
+import { createStore } from '@/shared/lib/create-store'
 import { ref } from 'vue'
 
 export type SidebarStore = ReturnType<typeof useSidebarStore>

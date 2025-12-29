@@ -4,7 +4,10 @@ import { createTreeMap, findNodeById, type TreeNode, type TreeMap } from '@/shar
 import type { TreeRenderProps } from 'naive-ui/es/tree/src/interface'
 import { iconMap } from '@/shared/lib/icon-map'
 import ComponentPathPicker from './ui/component-path-picker'
-import { apiGetMenus } from './menu-api'
+import { apiGetMenuButtons, apiGetMenus } from './menu-api'
+import { useTable } from '@/shared/hooks/use-table/use-table'
+import { menuStatus } from './modal/menu-status'
+import type { DataSourceOptions } from '@/shared/hooks/use-table/types'
 
 interface MenuMeta {
   title?: string
@@ -19,6 +22,30 @@ interface MenuItem extends TreeNode {
   mergeSingleChild?: boolean
 }
 
+interface MenuButtonItem {
+  /** 唯一标识符，字符串类型 */
+  id: string;
+  /** 菜单/按钮名称 */
+  name: string;
+  /** 类型：menu（菜单）或 button（按钮） */
+  type: 'menu' | 'button' | string;
+  /** 父级菜单ID，顶级菜单可能为 null 或空字符串 */
+  parent_id: string | null;
+  /** 权限标识符 */
+  permission: string;
+  /** 排序序号 */
+  sort_order: number;
+  /** 是否可见：1-可见，0-隐藏 */
+  visible: 0 | 1;
+  /** 状态：1-启用，0-停用 */
+  status: 0 | 1;
+  /** 创建时间，ISO 8601 格式字符串 */
+  created_at: string;
+}
+
+// 如果数据是数组形式
+export type MenuButtons = MenuButtonItem[];
+
 const MenuPage = defineComponent(() => {
   const pattern =ref('')
   const menuData = ref<MenuItem[]>([])
@@ -26,6 +53,11 @@ const MenuPage = defineComponent(() => {
   const defaultExpandedKeys = ref<string[]>(['system', 'icon', 'about'])
   const selectedKeys = ref<string[]>([])
   let treeMap: TreeMap = new Map()
+
+  const [MenuButtonsTable, { reload: menuButtonReload }] = useTable([
+    { title: '名称', key: 'name' },
+    { title: '状态', key: 'status', render: (row) => menuStatus[row.status as MenuButtonItem['status']]  },
+  ], { dataSource: getMenuButtons, initDataSource: false })
 
   loadMenus()
 
@@ -96,7 +128,9 @@ const MenuPage = defineComponent(() => {
               </NDescriptionsItem>
             </NDescriptions>
             <h2 class="mb-3 mt-5">按钮</h2>
-            <div>111222</div>
+            <div>
+              <MenuButtonsTable />
+            </div>
           </div>
         ) : null}
       </div>
@@ -106,21 +140,25 @@ const MenuPage = defineComponent(() => {
   async function loadMenus() {
     const res = await apiGetMenus()
     menuData.value = res as MenuItem[]
-    console.log('menuData.value')
-    console.log(menuData.value)
     treeMap = createTreeMap(menuData.value)
   }
 
   function handleSelectedKeysChange(keys: string[]) {
     const [key] = keys
-    if (key) {
-      selectedMenu.value = findNodeById(treeMap, key) as MenuItem | null
-      console.log('selectedMenu.value')
-      console.log(selectedMenu.value)
-    } else {
+    if (!key) {
       selectedMenu.value = null
+      return
     }
+    selectedMenu.value = findNodeById(treeMap, key) as MenuItem
+    menuButtonReload()
   }
+
+  async function getMenuButtons({ page,pageSize }: DataSourceOptions) {
+    if (!selectedMenu.value?.id) return {}
+    const res = await apiGetMenuButtons(selectedMenu.value?.id, { page,pageSize })
+    return { data: res.data, total: res.total }
+  }
+
 
   function renderLabel({ option }: TreeRenderProps & { icon: FunctionalComponent }) {
     const Icon = iconMap[option.icon]
