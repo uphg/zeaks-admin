@@ -10,7 +10,7 @@ import { selectTypes } from '@/shared/config/form'
 import { toValue, type MaybeRefOrGetter, type Ref } from 'vue'
 
 export function renderFields(fields: FieldProps[], itemsNodeMap: Map<string, any>, isGrid: boolean) {
-  return fields.map((field, index) => {
+  return fields?.map((field, index) => {
     const FormItem = isGrid ? NFormItemGi : NFormItem
     if (isNestedField(field)) {
       const { label, children: nestedFields, ...props } = field
@@ -461,6 +461,7 @@ function isNestedField(field: FieldProps) {
 
 function flattenFields(fields: FieldProps[]): FieldProps[] {
   const flattened: FieldProps[] = []
+  if (!fields?.length) return []
 
   fields.forEach((field) => {
     if (isNestedField(field)) {

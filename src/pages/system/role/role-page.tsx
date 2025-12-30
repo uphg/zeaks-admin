@@ -1,9 +1,20 @@
+import { useFilterForm } from '@/shared/hooks/use-filter-form'
+import { useTable } from '@/shared/hooks/use-table/use-table'
 import { defineComponent } from 'vue'
 
 const RolePage = defineComponent(() => {
+  const [FilterForm] = useFilterForm()
+  const [RoleTable] = useTable([
+    { title: '角色名称', key: 'name' },
+    { title: '角色编码', key: 'name' },
+    { title: '状态', key: 'name' },
+  ])
   return () => (
     <div class="p-6">
-      <h1 class="text-2xl font-bold mb-4">角色管理</h1>
+      <div>
+        <FilterForm />
+      </div>
+      <RoleTable />
     </div>
   )
 })

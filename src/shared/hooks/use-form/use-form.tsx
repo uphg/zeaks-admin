@@ -5,6 +5,7 @@ import { assign, isNil, omit } from 'lodash-es'
 import { NForm, NGrid } from 'naive-ui'
 import { customOptionNames, defaultFormProps } from './common'
 import { createDefaultField, createFormRules, createItemNodeMap, renderFields } from './helpers'
+import { defineComponent, ref, shallowRef } from 'vue'
 
 export function useForm(fields: FieldProps[], options: UseFormProps = {}) {
   const form = ref<Record<string, any>>({})
