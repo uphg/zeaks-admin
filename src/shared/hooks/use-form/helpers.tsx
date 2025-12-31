@@ -2,7 +2,7 @@ import type { FormRules, SelectOption } from 'naive-ui'
 import type { FieldProps, UseFormProps } from './types'
 import type { CamelInputElement, InputElement } from '@/shared/lib/form/types'
 import { isObject } from '@vueuse/core'
-import { omit, pick } from 'lodash-es'
+import { isBoolean, omit, pick } from 'lodash-es'
 import { NAutoComplete, NButton, NCascader, NCheckbox, NCheckboxGroup, NColorPicker, NDatePicker, NDynamicInput, NDynamicTags, NFormItem, NFormItemGi, NGrid, NInput, NInputNumber, NRadio, NRadioButton, NRadioGroup, NRate, NSelect, NSlider, NSwitch, NTimePicker, NTransfer, NTreeSelect, NUpload } from 'naive-ui'
 // import { getDefaultValue, getFieldRuleConfig, setNestedRule } from '@/utils/form'
 import { nFormItemPropNames } from './common'
@@ -435,6 +435,11 @@ export function createFormRules(fields: FieldProps[], options: UseFormProps = {}
     }
 
     // 只有在 autoRules 中包含该字段时才生成规则
+
+    if (isBoolean(options.autoRules) && !options.autoRules) {
+      return
+    }
+
     if (!options.autoRules?.includes(key)) {
       return
     }
