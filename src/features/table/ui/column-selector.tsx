@@ -3,13 +3,14 @@ import { computed, defineComponent, type PropType } from 'vue'
 import ColumnSelectorButton from './column-selector-button'
 
 interface ColumnSelectorItem {
-  title: string
-  key: string | number
+  title?: string
+  key?: string | number
   [key: string]: any
 }
 
 const ColumnSelector = defineComponent({
   name: 'ColumnSelector',
+  inheritAttrs: false,
   props: {
     value: {
       type: Array as PropType<string[]>,
@@ -20,9 +21,13 @@ const ColumnSelector = defineComponent({
     },
   },
   emits: ['update:value'],
-  setup(props, { emit, slots }) {
-    const isAllColumnsSelected = computed(() => props.value?.length === props.columns.length)
-    const isIndeterminate = computed(() => !!(props.value?.length && props.value.length > 0 && props.value.length < props.columns.length))
+  setup(props, { emit, slots, attrs }) {
+    const keyedColumns = computed(() => {
+      let count = 0
+      return props.columns.map(item => ({...item, ...(item.key ? {} : { key: `col_${++count}` })}))
+    })
+    const isAllColumnsSelected = computed(() => props.value?.length === keyedColumns.value.length)
+    const isIndeterminate = computed(() => !!(props.value?.length && props.value.length > 0 && props.value.length < keyedColumns.value.length))
 
     function handleColumnToggle(value: Array<string | number>) {
       emit('update:value', value)
@@ -30,7 +35,7 @@ const ColumnSelector = defineComponent({
 
     function handleSelectAllColumns(checked: boolean) {
       if (checked) {
-        const selectAllColumns = props.columns.map(col => col.key)
+        const selectAllColumns = keyedColumns.value.map(col => col.key)
         emit('update:value', selectAllColumns)
       } else {
         emit('update:value', [])
@@ -45,7 +50,7 @@ const ColumnSelector = defineComponent({
             <div class="rounded bg-white">
               <div>
                 <div class="px-1 pt-1 flex flex-col">
-                  <div class="px-3 rounded-3px flex h-8.5 cursor-pointer transition-colors items-center hover:bg-gray-100">
+                  {/* <div class="px-3 rounded-3px flex h-8.5 cursor-pointer transition-colors items-center hover:bg-gray-100">
                     <NCheckbox
                       checked={isAllColumnsSelected.value}
                       indeterminate={isIndeterminate.value}
@@ -53,7 +58,14 @@ const ColumnSelector = defineComponent({
                     >
                       全选
                     </NCheckbox>
-                  </div>
+                  </div> */}
+                  <ColumnSelectorButton
+                    checked={isAllColumnsSelected.value}
+                    indeterminate={isIndeterminate.value}
+                    onUpdateChecked={handleSelectAllColumns}
+                  >
+                    全选
+                  </ColumnSelectorButton>
                 </div>
                 <div class="my-1 bg-gray-100 h-1px"></div>
                 <NCheckboxGroup
@@ -61,8 +73,8 @@ const ColumnSelector = defineComponent({
                   onUpdate:value={handleColumnToggle}
                 >
                   <div class="px-1 pb-1 flex flex-col">
-                    {props.columns?.length
-                      ? props.columns.map(col => (
+                    {keyedColumns.value?.length
+                      ? keyedColumns.value.map(col => (
                           <ColumnSelectorButton value={col.key} key={col.key}>{col.title}</ColumnSelectorButton>
                         ))
                       : null}

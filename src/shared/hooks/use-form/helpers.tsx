@@ -15,7 +15,7 @@ export function renderFields(fields: FieldProps[], itemsNodeMap: Map<string, any
     if (isNestedField(field)) {
       const { label, children: nestedFields, ...props } = field
       return (
-        <FormItem key={index} label={label!}>
+        <FormItem  {...pick(props, nFormItemPropNames)} key={index} label={label!}>
           {nestedFields && (
             props?.grid
               ? (
@@ -65,7 +65,8 @@ function processOptions<T extends SelectOption>(options?: MaybeRefOrGetter<T[]>)
 export function createItemNodeMap(fields: FieldProps[], form: Ref<Record<string, any>>) {
   const flattenedFields = flattenFields(fields)
   const map = new Map()
-
+  console.log('flattenedFields')
+  console.log(flattenedFields)
   flattenedFields.forEach((field, index) => {
     const { key } = field
     const node = createItemNode(field, form)
@@ -78,13 +79,14 @@ export function createItemNodeMap(fields: FieldProps[], form: Ref<Record<string,
   }
 
   function createItemNode(field: FieldProps, form: Ref<Record<string, any>>) {
-    const { label, key, ..._props } = field
+    const { label, key, render, ..._props } = field
     const propsData = omit(_props || {}, 'children')
     const { as: tag = 'input', placeholder, ...restProps } = propsData
     if (!key) return
 
     const modelKey = tag === 'upload' ? 'fileList' : 'value'
-    const onUpdateValue = (value: any) => {
+    if (tag.children?.length) return null
+    const onUpdateValue = tag === 'button' ? null : (value: any) => {
       form.value[key] = value
     }
 
@@ -384,10 +386,13 @@ export function createItemNodeMap(fields: FieldProps[], form: Ref<Record<string,
         break
 
       case 'button': {
-        const { text, render, ...otherProps } = restProps
+        const { text, icon, ...otherProps } = restProps
         InputElement = () => (
           <NButton {...otherProps}>
-            {render ? render() : text}
+            {{
+              icon: icon ? () => <icon /> : null,
+              default: () => render ? render() : text
+            }}
           </NButton>
         )
         break
@@ -464,22 +469,32 @@ function isNestedField(field: FieldProps) {
   return Array.isArray(field.children)
 }
 
-function flattenFields(fields: FieldProps[]): FieldProps[] {
+function flattenFields(fields?: FieldProps[]): FieldProps[] {
   const flattened: FieldProps[] = []
   if (!fields?.length) return []
 
   fields.forEach((field) => {
+    if (!field.key) {
+      Object.assign(field, { key: createFieldKey(field) })
+    }
     if (isNestedField(field)) {
-      const { label, children: nestedFields } = field
-      nestedFields?.forEach(({ key, props }) => {
-        flattened.push({ label, key, props })
-      })
+      const { children: nestedFields } = field
+      flattened.push(field)
+      const children = flattenFields(nestedFields)
+      // nestedFields?.forEach((item) => {
+      //   // flattened.push({ label, key, props })
+      //   flattened.push(item)
+      // })
+      flattened.push(...children)
     } else {
       flattened.push(field)
     }
   })
 
   return flattened
+}
+function createFieldKey(field: FieldProps) {
+  return field.as ? `${field.as}_${Date.now()}_${Math.random().toString(36).slice(2, 9)}` : `field_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`
 }
 
 const arrDateTypes = ['daterange', 'datetimerange', 'monthrange', 'yearrange', 'quarterrange']

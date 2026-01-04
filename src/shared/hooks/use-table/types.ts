@@ -13,4 +13,4 @@ export interface UseTableProps extends DataTableProps {
   defaultColumnProps: Partial<DataTableColumn>
 }
 
-export type TableDefaultColumns = Array<DataTableColumn>
+export type TableDefaultColumns = Array<Partial<DataTableColumn>>

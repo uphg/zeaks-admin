@@ -6,8 +6,8 @@ export type FieldAs = InputElement
 export type FieldLabel = string | undefined | null
 export type FieldKey = string | null
 export interface FieldProps {
-  label: FieldLabel
-  key: FieldKey
+  label?: FieldLabel
+  key?: FieldKey
   as?: FieldAs
   children?: FieldProps[]
   [key: string]: any

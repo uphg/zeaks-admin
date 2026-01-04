@@ -1,15 +1,19 @@
 import type { CheckboxInst } from 'naive-ui'
-import type { ComponentPublicInstance } from 'vue'
+import type { ComponentPublicInstance, PropType } from 'vue'
 import { defineComponent, shallowRef, withModifiers } from 'vue'
 import { NCheckbox } from 'naive-ui'
+import type { OnUpdateChecked } from 'naive-ui/es/checkbox/src/interface'
+import type { MaybeArray } from 'naive-ui/es/_utils'
 
 const ColumnSelectorButton = defineComponent({
   name: 'ColumnSelectorButton',
   props: {
     value: {
-      type: [String, Number],
-      required: true,
+      type: [String, Number]
     },
+    checked: Boolean,
+    indeterminate: Boolean,
+    onUpdateChecked: [Array, Function] as PropType<MaybeArray<OnUpdateChecked>>
   },
   setup(props, { slots }) {
     const checkboxRef = shallowRef<ComponentPublicInstance & CheckboxInst | null>(null)
@@ -26,6 +30,9 @@ const ColumnSelectorButton = defineComponent({
         <NCheckbox
           ref={checkboxRef}
           value={props.value}
+          checked={props.checked}
+          indeterminate={props.indeterminate}
+          onUpdateChecked={props.onUpdateChecked}
           // @ts-expect-error NCheckbox doesn't declare onClick in types but it works at runtime
           onClick={withModifiers(() => {}, ['stop']) as any}
         >{slots.default?.()}

@@ -21,5 +21,6 @@ export type InputElement = 'auto-complete'
   | 'transfer'
   | 'tree-select'
   | 'upload'
+  | 'button'
 
 export type CamelInputElement = KebabToCamelCase<InputElement>

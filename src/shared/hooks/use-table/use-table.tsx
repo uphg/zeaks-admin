@@ -28,7 +28,7 @@ const defaultProps = {
 const customPropsNames = ['pagination', 'dataSource', 'initDataSource', 'hasLoading', 'onBeforeUpdateData', 'onAfterUpdateData', 'pagingWrapClass', 'defaultColumnProps']
 
 export function useTable(
-  defaultColumns: TableDefaultColumns,
+  defaultColumns: TableDefaultColumns | Ref<TableDefaultColumns>,
   props?: Partial<UseTableProps>,
   slots?: { empty: () => any, loading: () => any },
 ) {
@@ -96,7 +96,6 @@ export function useTable(
 
   const Table = defineComponent({
     inheritAttrs: false,
-
     setup(_, { attrs }) {
       return () => (
         <div {...attrs} class={mergeClass('flex flex-col gap-3', attrs.class as string)}>
