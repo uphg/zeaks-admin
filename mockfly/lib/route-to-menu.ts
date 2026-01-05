@@ -100,7 +100,8 @@ function transformRoutesToMenu(
       permission: defaultPermission(targetRoute),
       sort_order: defaultSortOrder * depth + index,
       visible: defaultVisible,
-      status: defaultStatus
+      status: defaultStatus,
+      component: targetRoute.component
     };
 
     // 处理子路由

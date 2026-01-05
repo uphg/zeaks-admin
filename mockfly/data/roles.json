@@ -2,7 +2,7 @@
   "items": [
     {
       "id": 1,
-      "name": "admin",
+      "name": "超级管理员",
       "description": "系统管理员",
       "permissions": ["*:*:*"],
       "user_count": 5,
@@ -10,22 +10,22 @@
       "created_at": "2023-01-01T00:00:00Z"
     },
     {
+      "id": 3,
+      "name": "管理员",
+      "description": "系统管理员",
+      "permissions": ["content:create", "content:edit", "content:delete"],
+      "user_count": 25,
+      "status": 1,
+      "created_at": "2023-02-15T09:30:00Z"
+    },
+    {
       "id": 2,
-      "name": "user",
+      "name": "普通用户",
       "description": "普通用户",
       "permissions": ["user:read", "user:update"],
       "user_count": 150,
       "status": 1,
       "created_at": "2023-01-01T00:00:00Z"
-    },
-    {
-      "id": 3,
-      "name": "editor",
-      "description": "编辑",
-      "permissions": ["content:create", "content:edit", "content:delete"],
-      "user_count": 25,
-      "status": 1,
-      "created_at": "2023-02-15T09:30:00Z"
     }
   ],
   "total": 10,

@@ -8,6 +8,7 @@ import { apiGetMenuButtons, apiGetMenus } from './menu-api'
 import { useTable } from '@/shared/hooks/use-table/use-table'
 import { menuStatus } from './modal/menu-status'
 import type { DataSourceOptions } from '@/shared/hooks/use-table/types'
+import XAction from '@/features/x-action/x-action'
 
 interface MenuMeta {
   title?: string
@@ -67,8 +68,8 @@ const MenuPage = defineComponent(() => {
         <div class="flex items-center justify-between">
           <h2>菜单树</h2>
           <div class="flex gap-3">
-            <NButton type="primary" size="small">新增</NButton>
-            <NButton type="error" size="small">删除</NButton>
+            <XAction type="create" size="small"/>
+            <XAction type="delete" size="small"/>
           </div>
         </div>
         <div>
@@ -111,20 +112,23 @@ const MenuPage = defineComponent(() => {
                 {selectedMenu.value.path}
               </NDescriptionsItem>
               <NDescriptionsItem label="组件路径" span={2}>
-                <ComponentPathPicker v-model:value={selectedMenu.value.component} />
+                {selectedMenu.value.component}
               </NDescriptionsItem>
+              {/* <NDescriptionsItem label="组件路径" span={2}>
+                <ComponentPathPicker v-model:value={selectedMenu.value.component} />
+              </NDescriptionsItem> */}
 
               <NDescriptionsItem label="布局">
-                苹果
+                默认布局
               </NDescriptionsItem>
               <NDescriptionsItem label="是否在侧栏显示">
-                苹果
+                是
               </NDescriptionsItem>
               <NDescriptionsItem label="状态">
-                苹果
+                可用
               </NDescriptionsItem>
               <NDescriptionsItem label="排序">
-                苹果
+                0
               </NDescriptionsItem>
             </NDescriptions>
             <h2 class="mb-3 mt-5">按钮</h2>
@@ -158,7 +162,6 @@ const MenuPage = defineComponent(() => {
     const res = await apiGetMenuButtons(selectedMenu.value?.id, { page,pageSize })
     return { data: res.data, total: res.total }
   }
-
 
   function renderLabel({ option }: TreeRenderProps & { icon: FunctionalComponent }) {
     const Icon = iconMap[option.icon]

@@ -1,12 +1,12 @@
 {
-  "data": [
+  "items": [
     {
       "id": 1,
       "name": "张三",
       "email": "zhangsan@example.com",
       "role": "admin",
       "status": "active",
-      "createdAt": "2024-01-15"
+      "created_at": "2024-01-15"
     },
     {
       "id": 2,
@@ -14,7 +14,7 @@
       "email": "lisi@example.com",
       "role": "user",
       "status": "active",
-      "createdAt": "2024-01-16"
+      "created_at": "2024-01-16"
     },
     {
       "id": 3,
@@ -22,7 +22,7 @@
       "email": "wangwu@example.com",
       "role": "editor",
       "status": "inactive",
-      "createdAt": "2024-01-17"
+      "created_at": "2024-01-17"
     },
     {
       "id": 4,
@@ -30,7 +30,7 @@
       "email": "zhaoliu@example.com",
       "role": "user",
       "status": "pending",
-      "createdAt": "2024-01-18"
+      "created_at": "2024-01-18"
     },
     {
       "id": 5,
@@ -38,7 +38,7 @@
       "email": "chenqi@example.com",
       "role": "admin",
       "status": "active",
-      "createdAt": "2024-01-19"
+      "created_at": "2024-01-19"
     },
     {
       "id": 6,
@@ -46,7 +46,7 @@
       "email": "zhouba@example.com",
       "role": "editor",
       "status": "active",
-      "createdAt": "2024-01-20"
+      "created_at": "2024-01-20"
     },
     {
       "id": 7,
@@ -54,7 +54,7 @@
       "email": "wujiu@example.com",
       "role": "user",
       "status": "inactive",
-      "createdAt": "2024-01-21"
+      "created_at": "2024-01-21"
     },
     {
       "id": 8,
@@ -62,7 +62,7 @@
       "email": "zhengshi@example.com",
       "role": "user",
       "status": "active",
-      "createdAt": "2024-01-22"
+      "created_at": "2024-01-22"
     },
     {
       "id": 9,
@@ -70,7 +70,7 @@
       "email": "liuyi@example.com",
       "role": "editor",
       "status": "pending",
-      "createdAt": "2024-01-23"
+      "created_at": "2024-01-23"
     },
     {
       "id": 10,
@@ -78,7 +78,7 @@
       "email": "suner@example.com",
       "role": "admin",
       "status": "active",
-      "createdAt": "2024-01-24"
+      "created_at": "2024-01-24"
     }
   ],
   "total": 100
