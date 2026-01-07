@@ -9,12 +9,14 @@ import { useTableStore } from '@/shared/ui/x-table/use-table-store'
 
 const RolePage = defineComponent(() => {
   const tableStore = useTableStore()
-  const [FilterForm, {resetForm}] = useFilterForm([
+  const filterFormStore = useFilterFormStore()
+  const columnSelectorStore = useColumnSelectorStore()
+  const FilterForm = useFilterForm([
     { label: '用户名', key: 'name' },
     { label: '用户状态', key: 'status' },
-  ], { onSearch: () => reload(), onReset() {
-    resetForm()
-    resetPage() 
+  ], filterFormStore, { onSearch: () => tableStore.value.reload(), onReset() {
+    filterFormStore.value.resetForm()
+    tableStore.value.resetPage() 
   }  })
   const allColumns = ref([
     { type: 'selection', key: 'select', title: '复选框', fixed: 'left', width: 50, },
@@ -24,8 +26,8 @@ const RolePage = defineComponent(() => {
     { title: '创建时间', key: 'created_at' },
     { title: '状态', key: 'status' },
   ])
-  const [ColumnSelector, { columns }] = useColumnSelector(allColumns)
-  const [UserTable, { reload, resetPage }] = useTable(columns, { dataSource })
+  const ColumnSelector = useColumnSelector(allColumns, columnSelectorStore)
+  const UserTable = useTable(columnSelectorStore.value.columns, tableStore, { dataSource })
 
   return () => (
     <div class="p-6 flex flex-col gap-4">

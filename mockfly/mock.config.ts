@@ -1,10 +1,10 @@
 import type { MockflyConfig } from 'mockfly'
-import { responseFile } from './utils.ts'
-import { menuButtonsMap, routeData } from './common.ts'
-import { responseMenus } from './lib/route-to-menu.ts'
+import { responseFile } from './shared/lib/response-file.ts'
+import { responseMenus } from './shared/lib/route-to-menu.ts'
+import { menuButtonsMap, routeData } from './shared/common.ts'
 
 const config: MockflyConfig = {
-  port: 4001,
+  port: 3021,
   host: 'localhost',
   baseUrl: '/api',
   routes: [
@@ -13,7 +13,7 @@ const config: MockflyConfig = {
       path: '/login',
       method: 'POST',
       response: {
-        token: 'admin-token'
+        token: 'UCugv8YaJk5LCN_qr-jT2YorgmhopytI'
       }
     },
     {

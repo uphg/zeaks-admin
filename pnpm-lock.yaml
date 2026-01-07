@@ -64,8 +64,8 @@ catalogs:
       specifier: ^4.17.21
       version: 4.17.21
     mockfly:
-      specifier: 1.3.1
-      version: 1.3.1
+      specifier: 1.4.1
+      version: 1.4.1
     npm-run-all2:
       specifier: ^8.0.4
       version: 8.0.4
@@ -198,7 +198,7 @@ importers:
         version: 4.17.21
       mockfly:
         specifier: catalog:dev
-        version: 1.3.1
+        version: 1.4.1
       npm-run-all2:
         specifier: catalog:dev
         version: 8.0.4
@@ -3008,8 +3008,8 @@ packages:
   mnemonist@0.39.6:
     resolution: {integrity: sha512-A/0v5Z59y63US00cRSLiloEIw3t5G+MiKz4BhX21FI+YBJXBOGW0ohFxTxO08dsOYlzxo87T7vGfZKYp2bcAWA==}
 
-  mockfly@1.3.1:
-    resolution: {integrity: sha512-w7BfmTpi203wYoP8QUDWzRLAifyD3FMCA8ahv9q1oujvj69ifapOJd1xdO6QDM2JBC58r8g38py86tR/SPMkxw==}
+  mockfly@1.4.1:
+    resolution: {integrity: sha512-g9i/Q/ITbBjvGy5VP4SAxg+voLfvwfI39xYZiwWAcGg1ZcenFpc+boJ9lm6Yf03tKnZVkuRUF/4UdDSBHrWq+w==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -7163,7 +7163,7 @@ snapshots:
     dependencies:
       obliterator: 2.0.5
 
-  mockfly@1.3.1:
+  mockfly@1.4.1:
     dependencies:
       '@fastify/cors': 9.0.1
       '@fastify/static': 7.0.4

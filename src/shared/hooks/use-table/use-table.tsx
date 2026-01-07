@@ -62,9 +62,15 @@ export function useTable(
     return res
   }
 
+  function resetPage() {
+    page.value = 1
+    pageSize.value = 10
+  }
+
   function startLoading() {
     loading.value = true
   }
+
   function stopLoading() {
     loading.value = false
   }
@@ -112,5 +118,5 @@ export function useTable(
     },
   })
 
-  return [Table, { data, columns, page, pageSize, sorter, reload, checkedRowKeys, getSelectedRows }] as const
+  return [Table, { data, columns, page, pageSize, sorter, reload, checkedRowKeys, getSelectedRows, resetPage }] as const
 }

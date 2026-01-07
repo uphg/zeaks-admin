@@ -9,13 +9,8 @@ import { useTableStore } from '@/shared/ui/x-table/use-table-store'
 
 const RolePage = defineComponent(() => {
   const tableStore = useTableStore()
-  const [FilterForm, {resetForm}] = useFilterForm([
-    { label: '用户名', key: 'name' },
-    { label: '用户状态', key: 'status' },
-  ], { onSearch: () => reload(), onReset() {
-    resetForm()
-    resetPage() 
-  }  })
+  const filterFormStore = useFilterFormStore()
+  const columnSelectorStore = useColumnSelectorStore()
   const allColumns = ref([
     { type: 'selection', key: 'select', title: '复选框', fixed: 'left', width: 50, },
     { title: '用户名', key: 'name' },
@@ -24,19 +19,34 @@ const RolePage = defineComponent(() => {
     { title: '创建时间', key: 'created_at' },
     { title: '状态', key: 'status' },
   ])
-  const [ColumnSelector, { columns }] = useColumnSelector(allColumns)
-  const [UserTable, { reload, resetPage }] = useTable(columns, { dataSource })
 
   return () => (
     <div class="p-6 flex flex-col gap-4">
-      <FilterForm />
+      <FilterForm
+        fields={[
+          { label: '用户名', key: 'name' },
+          { label: '用户状态', key: 'status' },
+        ]}
+        store={filterFormStore}
+        onSearch={onSearch}
+        onReset={onReset}
+      />
       <div class="flex">
         <XAction type="create" />
-        <ColumnSelector class="ml-auto" />
+        <ColumnSelector store={columnSelectorStore} allColumns={allColumns} class="ml-auto" />
       </div>
-      <UserTable />
+      <Table columns={columnSelectorStore.value.columns.value} store={tableStore} options={{ dataSource }} />
     </div>
   )
+
+  function onSearch() {
+    tableStore.value.reload()
+  }
+
+  function onReset() {
+    filterFormStore.value.resetForm()
+    tableStore.value.resetPage() 
+  }
 
   async function dataSource({ page,pageSize }: DataSourceOptions) {
     const res = await apiGetUsers({ page, pageSize })

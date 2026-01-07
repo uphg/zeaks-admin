@@ -1,6 +1,8 @@
+import { encodeBase64 } from "@/shared/lib/base64-codec"
+
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 
-export const TOKEN_KEY = 'token'
+export const TOKEN_KEY = encodeBase64('admin-token')
 
 export const ROUTE_WHITE_LIST = ['/login', '/register', '/404']
 
