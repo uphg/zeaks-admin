@@ -8,6 +8,7 @@ import type { DataSourceOptions } from '@/shared/hooks/use-table/types'
 import XStateSwitch from '@/features/x-state-switch/x-state-switch'
 import XTable from '@/shared/ui/x-table/x-table'
 import { useTableStore } from '@/shared/ui/x-table/use-table-store'
+import XColumnSelect from '@/features/x-column-select/x-column-select'
 
 const RolePage = defineComponent(() => {
   const tableStore = useTableStore()
@@ -26,16 +27,15 @@ const RolePage = defineComponent(() => {
     { title: '创建时间', key: 'created_at' },
     { title: '状态', key: 'status', render: (row) => <XStateSwitch value={row.status} checked={[1, '启用']} unchecked={[0, '禁用']} /> },
   ])
-  const [ColumnSelector, { columns }] = useColumnSelector(allColumns)
-
+  
   return () => (
     <div class="p-6 flex flex-col gap-4">
       <FilterForm />
       <div class="flex">
         <XAction type="create" />
-        <ColumnSelector class="ml-auto" />
+        <XColumnSelect class="ml-auto" store={tableStore} rawColumns={allColumns}  />
       </div>
-      <XTable store={tableStore} columns={columns} dataSource={dataSource} />
+      <XTable store={tableStore} dataSource={dataSource} />
     </div>
   )
 

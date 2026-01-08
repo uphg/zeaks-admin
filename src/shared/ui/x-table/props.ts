@@ -25,6 +25,7 @@ export interface XTableStore {
   loading: Ref<boolean>
   sorter: Ref<boolean | 'default'> | Function
   checkedRowKeys: Ref<(string | number)[]>
+  checkedColumnKeys: Ref<(string | number)[]>
   columns: Ref<DataTableProps['columns']> | null
 }
 

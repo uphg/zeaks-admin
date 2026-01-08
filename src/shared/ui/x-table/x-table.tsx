@@ -1,7 +1,7 @@
 import { isArray, isNil, omit } from 'lodash-es'
 import { mergeClass } from '@/shared/lib/merge-class'
 import { dataTableProps, NDataTable, NPagination } from 'naive-ui'
-import { computed, defineComponent, isRef, ref,  type Ref } from 'vue'
+import { computed, defineComponent, isRef, ref,  unref,  type Ref } from 'vue'
 import { customProps, excludePropKeys, nTableDefaultProps, pagingWrapDefaultClass, type XTableStore } from './props'
 
 const XTable = defineComponent({
@@ -14,10 +14,13 @@ const XTable = defineComponent({
   setup(props, { attrs, slots }) {
     const nTableProps = computed(() => omit(props, excludePropKeys))
     if (!props.store) return
-    const columns = isRef(props.columns) ? props.columns : ref(props.columns)
+    // const columns = computed(() => unref(props.columns)) 
+    const columns = computed(() => unref(props.store?.columns)) 
     Object.assign(props.store, {
-      columns, reload, resetPage, startLoading, stopLoading, getSelectedRows
+      reload, resetPage, startLoading, stopLoading, getSelectedRows
     })
+    console.log('columns')
+    console.log(columns)
 
     const { data, page, pageSize, total, loading, checkedRowKeys } = props.store
 

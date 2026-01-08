@@ -1,10 +1,10 @@
 import fs from 'node:fs'
-import path, { dirname } from 'node:path';
+import path, { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // ES 模块
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = dirname(join(__filename, '../../'));
 
 export function responseFile(filePath: string) {
   return () => readJsonFile(filePath)
