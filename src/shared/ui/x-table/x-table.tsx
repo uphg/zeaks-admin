@@ -14,18 +14,27 @@ const XTable = defineComponent({
   setup(props, { attrs, slots }) {
     const nTableProps = computed(() => omit(props, excludePropKeys))
     if (!props.store) return
-    // const columns = computed(() => unref(props.columns)) 
-    const columns = computed(() => unref(props.store?.columns)) 
     Object.assign(props.store, {
       reload, resetPage, startLoading, stopLoading, getSelectedRows
     })
-    console.log('columns')
-    console.log(columns)
 
-    const { data, page, pageSize, total, loading, checkedRowKeys } = props.store
+    const { data, page, pageSize, total, loading, columns, checkedRowKeys } = props.store
 
     props.initDataSource && reload()
-  
+    
+    return () => (
+      <div {...attrs} class={mergeClass('flex flex-col gap-3', attrs.class as string)}>
+        <NDataTable {...nTableProps.value} class={props.tableClass} data={data.value} columns={columns.value} v-model:checkedRowKeys={checkedRowKeys.value} loading={loading.value}>
+          {slots}
+        </NDataTable>
+        {props.pagination && (
+          <div class={mergeClass(pagingWrapDefaultClass, props.pagingWrapClass)}>
+            <NPagination {...props.pagination} item-count={total.value} page={page.value} pageSize={pageSize.value} onUpdate:page={onPageChange} onUpdate:pageSize={onPageSizeChange} />
+          </div>
+        )}
+      </div>
+    )
+
     async function reload() {
       onBeforeUpdateData()
       const res = await props.dataSource?.({ page: page.value, pageSize: pageSize.value }).catch((e) => {
@@ -81,19 +90,6 @@ const XTable = defineComponent({
         return checkedRowKeys.value.includes(key)
       })
     }
-    
-    return () => (
-      <div {...attrs} class={mergeClass('flex flex-col gap-3', attrs.class as string)}>
-        <NDataTable {...nTableProps.value} class={props.tableClass} data={data.value} columns={columns.value} v-model:checkedRowKeys={checkedRowKeys.value} loading={loading.value}>
-          {slots}
-        </NDataTable>
-        {props.pagination && (
-          <div class={mergeClass(pagingWrapDefaultClass, props.pagingWrapClass)}>
-            <NPagination {...props.pagination} item-count={total.value} page={page.value} pageSize={pageSize.value} onUpdate:page={onPageChange} onUpdate:pageSize={onPageSizeChange} />
-          </div>
-        )}
-      </div>
-    )
   },
 })
 

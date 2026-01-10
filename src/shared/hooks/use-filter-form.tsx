@@ -25,7 +25,7 @@ export function useFilterForm(fields: FieldProps[], filterOptions: filterOptions
       { as: 'button', text: '重置', icon: iconMap['rotate-cw'], onClick: filterOptions.onReset },
     ] }
   ]
-  const [Form, ...rest] = useForm(fields, defaultFormOptions)
+  const [Form, ...rest] = useForm(formFields, defaultFormOptions)
   return [
     () => (
       <NCard>

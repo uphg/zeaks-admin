@@ -1,30 +1,30 @@
-import { NCheckbox, NCheckboxGroup, NPopover } from 'naive-ui'
+import { NCheckboxGroup, NPopover } from 'naive-ui'
 import { computed, defineComponent, type PropType } from 'vue'
-import ColumnSelectorButton from './column-selector-button'
+import SelectorButton from './selector-button'
 
-interface ColumnSelectorItem {
+interface DropdownSelectItem {
   title?: string
   key?: string | number
   [key: string]: any
 }
 
-const ColumnSelector = defineComponent({
-  name: 'ColumnSelector',
+const DropdownSelect = defineComponent({
+  name: 'DropdownSelect',
   inheritAttrs: false,
   props: {
     value: {
       type: Array as PropType<string[]>,
     },
-    columns: {
-      type: Array as PropType<ColumnSelectorItem[]>,
+    options: {
+      type: Array as PropType<DropdownSelectItem[]>,
       default: () => [],
     },
   },
   emits: ['update:value'],
-  setup(props, { emit, slots, attrs }) {
+  setup(props, { emit, slots }) {
     const keyedColumns = computed(() => {
       let count = 0
-      return props.columns.map(item => ({...item, ...(item.key ? {} : { key: `col_${++count}` })}))
+      return props.options.map(item => ({...item, ...(item.key ? {} : { key: `col_${++count}` })}))
     })
     const isAllColumnsSelected = computed(() => props.value?.length === keyedColumns.value.length)
     const isIndeterminate = computed(() => !!(props.value?.length && props.value.length > 0 && props.value.length < keyedColumns.value.length))
@@ -50,22 +50,13 @@ const ColumnSelector = defineComponent({
             <div class="rounded bg-white">
               <div>
                 <div class="px-1 pt-1 flex flex-col">
-                  {/* <div class="px-3 rounded-3px flex h-8.5 cursor-pointer transition-colors items-center hover:bg-gray-100">
-                    <NCheckbox
-                      checked={isAllColumnsSelected.value}
-                      indeterminate={isIndeterminate.value}
-                      onUpdateChecked={handleSelectAllColumns}
-                    >
-                      全选
-                    </NCheckbox>
-                  </div> */}
-                  <ColumnSelectorButton
+                  <SelectorButton
                     checked={isAllColumnsSelected.value}
                     indeterminate={isIndeterminate.value}
                     onUpdateChecked={handleSelectAllColumns}
                   >
                     全选
-                  </ColumnSelectorButton>
+                  </SelectorButton>
                 </div>
                 <div class="my-1 bg-gray-100 h-1px"></div>
                 <NCheckboxGroup
@@ -75,7 +66,7 @@ const ColumnSelector = defineComponent({
                   <div class="px-1 pb-1 flex flex-col">
                     {keyedColumns.value?.length
                       ? keyedColumns.value.map(col => (
-                          <ColumnSelectorButton value={col.key} key={col.key}>{col.title}</ColumnSelectorButton>
+                          <SelectorButton value={col.key} key={col.key}>{col.title}</SelectorButton>
                         ))
                       : null}
                   </div>
@@ -89,4 +80,4 @@ const ColumnSelector = defineComponent({
   },
 })
 
-export default ColumnSelector
+export default DropdownSelect

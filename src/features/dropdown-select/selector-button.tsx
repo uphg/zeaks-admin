@@ -5,8 +5,8 @@ import { NCheckbox } from 'naive-ui'
 import type { OnUpdateChecked } from 'naive-ui/es/checkbox/src/interface'
 import type { MaybeArray } from 'naive-ui/es/_utils'
 
-const ColumnSelectorButton = defineComponent({
-  name: 'ColumnSelectorButton',
+const SelectorButton = defineComponent({
+  name: 'SelectorButton',
   props: {
     value: {
       type: [String, Number]
@@ -42,4 +42,4 @@ const ColumnSelectorButton = defineComponent({
   },
 })
 
-export default ColumnSelectorButton
+export default SelectorButton
