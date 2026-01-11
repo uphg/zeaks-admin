@@ -2,12 +2,14 @@ import type { FormRules, SelectOption } from 'naive-ui'
 import type { FieldProps, UseFormProps } from './types'
 import type { CamelInputElement, InputElement } from '@/shared/lib/form/types'
 import { isObject } from '@vueuse/core'
-import { isBoolean, omit, pick } from 'lodash-es'
+import { isBoolean, isNil, omit, pick } from 'lodash-es'
 import { NAutoComplete, NButton, NCascader, NCheckbox, NCheckboxGroup, NColorPicker, NDatePicker, NDynamicInput, NDynamicTags, NFormItem, NFormItemGi, NGrid, NInput, NInputNumber, NRadio, NRadioButton, NRadioGroup, NRate, NSelect, NSlider, NSwitch, NTimePicker, NTransfer, NTreeSelect, NUpload } from 'naive-ui'
-// import { getDefaultValue, getFieldRuleConfig, setNestedRule } from '@/utils/form'
 import { nFormItemPropNames } from './common'
 import { selectTypes } from '@/shared/config/form'
 import { toValue, type MaybeRefOrGetter, type Ref } from 'vue'
+
+const inputNodeTags = []
+export const actionNodeTags = ['button']
 
 export function renderFields(fields: FieldProps[], itemsNodeMap: Map<string, any>, isGrid: boolean) {
   return fields?.map((field, index) => {
@@ -21,6 +23,7 @@ export function renderFields(fields: FieldProps[], itemsNodeMap: Map<string, any
               ? (
                   <NGrid {...props.grid}>
                     {nestedFields.map(({ label, key, ...props }) => {
+                      if (!key) return
                       const Input = itemsNodeMap.get(key)
                       return (
                         <NFormItemGi {...pick(props, nFormItemPropNames)} key={key} path={key} label={label!}>
@@ -32,6 +35,7 @@ export function renderFields(fields: FieldProps[], itemsNodeMap: Map<string, any
                 )
               : (
                   nestedFields.map(({ label, key, ...props }) => {
+                    if (!key) return
                     const Input = itemsNodeMap.get(key)
                     return (
                       <NFormItem {...pick(props, nFormItemPropNames)} key={key} path={key} label={label!}>
@@ -45,6 +49,7 @@ export function renderFields(fields: FieldProps[], itemsNodeMap: Map<string, any
       )
     } else {
       const { label, key, ...props } = field
+      if (!key) return
       const Input = itemsNodeMap.get(key)
       return (
         <FormItem {...pick(props, nFormItemPropNames)} key={key} path={key} label={label!}>
@@ -53,6 +58,10 @@ export function renderFields(fields: FieldProps[], itemsNodeMap: Map<string, any
       )
     }
   })
+}
+
+export function isUnbindItem(field: FieldProps) {
+  return field.children || field.as && actionNodeTags.includes(field.as)
 }
 
 // 处理可能的响应式 options 值
@@ -65,11 +74,12 @@ function processOptions<T extends SelectOption>(options?: MaybeRefOrGetter<T[]>)
 export function createItemNodeMap(fields: FieldProps[], form: Ref<Record<string, any>>) {
   const flattenedFields = flattenFields(fields)
   const map = new Map()
-  console.log('flattenedFields')
-  console.log(flattenedFields)
   flattenedFields.forEach((field, index) => {
-    const { key } = field
     const node = createItemNode(field, form)
+    if (isNil(field.key)) {
+      field.key = createFieldKey(field, index)
+    }
+    const { key } = field
     map.set(key, node)
   })
 
@@ -82,7 +92,21 @@ export function createItemNodeMap(fields: FieldProps[], form: Ref<Record<string,
     const { label, key, render, ..._props } = field
     const propsData = omit(_props || {}, 'children')
     const { as: tag = 'input', placeholder, ...restProps } = propsData
-    if (!key) return
+    if (!key) {
+      if (tag === 'button') {
+        const { text, icon, ...otherProps } = restProps
+        const InputElement = () => (
+          <NButton {...otherProps}>
+            {{
+              icon: icon ? () => <icon /> : null,
+              default: () => render ? render() : text
+            }}
+          </NButton>
+        )
+        return InputElement
+      }
+      return null
+    }
 
     const modelKey = tag === 'upload' ? 'fileList' : 'value'
     if (tag.children?.length) return null
@@ -385,18 +409,6 @@ export function createItemNodeMap(fields: FieldProps[], form: Ref<Record<string,
         )
         break
 
-      case 'button': {
-        const { text, icon, ...otherProps } = restProps
-        InputElement = () => (
-          <NButton {...otherProps}>
-            {{
-              icon: icon ? () => <icon /> : null,
-              default: () => render ? render() : text
-            }}
-          </NButton>
-        )
-        break
-      }
       default:
         InputElement = () => (
           <NInput
@@ -474,17 +486,11 @@ function flattenFields(fields?: FieldProps[]): FieldProps[] {
   if (!fields?.length) return []
 
   fields.forEach((field) => {
-    if (!field.key) {
-      Object.assign(field, { key: createFieldKey(field) })
-    }
+
     if (isNestedField(field)) {
       const { children: nestedFields } = field
       flattened.push(field)
       const children = flattenFields(nestedFields)
-      // nestedFields?.forEach((item) => {
-      //   // flattened.push({ label, key, props })
-      //   flattened.push(item)
-      // })
       flattened.push(...children)
     } else {
       flattened.push(field)
@@ -493,8 +499,12 @@ function flattenFields(fields?: FieldProps[]): FieldProps[] {
 
   return flattened
 }
-function createFieldKey(field: FieldProps) {
-  return field.as ? `${field.as}_${Date.now()}_${Math.random().toString(36).slice(2, 9)}` : `field_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`
+
+function createFieldKey(field: FieldProps, count?: number) {
+  const prefix = field.as ? field.as : `fk`
+  const timestamp = Date.now().toString(36)
+  const random = Math.random().toString(36).substring(2, 9)
+  return [prefix, timestamp, random, count].filter(item => !isNil(item)).join('-')
 }
 
 const arrDateTypes = ['daterange', 'datetimerange', 'monthrange', 'yearrange', 'quarterrange']

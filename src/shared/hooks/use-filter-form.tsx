@@ -1,23 +1,26 @@
 import { NCard } from "naive-ui"
-import type { FieldProps, UseFormProps } from "./use-form/types"
-import { useForm } from "./use-form/use-form"
-import { iconMap } from "../lib/icon-map"
+import type { FieldProps } from "./use-form/types"
+import { iconMap } from "@/shared/lib/icon-map"
+import XFormKit, { type XFormKitProps } from '@/shared/ui/x-form-kit/x-form-kit'
+import { useFormKitStore } from "@/shared/ui/x-form-kit/use-form-kit-store"
 
-const defaultFormOptions: UseFormProps = {
+const defaultProps: Partial<XFormKitProps> = {
+  labelPlacement: 'left',
   autoRules: false,
   showFeedback: false,
   grid: {
     xGap: 12,
     cols: '3 1000:4',
-  }
+  },
 }
 
-interface filterOptions {
-  onSearch(): void
-  onReset(): void
+interface FilterOptions {
+  onSearch?: () => void
+  onReset?: () => void
 }
 
-export function useFilterForm(fields: FieldProps[], filterOptions: filterOptions = {}) {
+export function useFilterForm(fields: FieldProps[], filterOptions: FilterOptions = {}) {
+  const formKitStore = useFormKitStore()
   const formFields = [
     ...fields,
     { span: '1 1000:2', contentClass: 'flex gap-3 justify-end', children: [
@@ -25,12 +28,11 @@ export function useFilterForm(fields: FieldProps[], filterOptions: filterOptions
       { as: 'button', text: '重置', icon: iconMap['rotate-cw'], onClick: filterOptions.onReset },
     ] }
   ]
-  const [Form, ...rest] = useForm(formFields, defaultFormOptions)
   return [
     () => (
       <NCard>
-        <Form />
+        <XFormKit store={formKitStore} fields={formFields} {...defaultProps}/>
       </NCard>),
-    ...rest
+    formKitStore
   ] as const
 }

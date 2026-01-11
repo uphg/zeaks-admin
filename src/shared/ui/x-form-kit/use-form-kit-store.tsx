@@ -1,5 +1,6 @@
 import type { FormRules, NForm } from "naive-ui"
 import { ref, shallowRef } from "vue"
+import type { FormKitStore } from "./props"
 
 export function useFormKitStore() {
   const store = {
@@ -7,5 +8,5 @@ export function useFormKitStore() {
     formRef: shallowRef<InstanceType<typeof NForm>>(),
     rules: ref<FormRules>({})
   }
-  return store
+  return store as Partial<FormKitStore>
 }

@@ -4,7 +4,7 @@ import { isObject } from '@vueuse/core'
 import { assign, isNil, omit } from 'lodash-es'
 import { NForm, NGrid } from 'naive-ui'
 import { customOptionNames, defaultFormProps } from './common'
-import { createDefaultField, createFormRules, createItemNodeMap, renderFields } from './helpers'
+import { actionNodeTags, createDefaultField, createFormRules, createItemNodeMap, isUnbindItem, renderFields } from './helpers'
 import { defineComponent, ref, shallowRef } from 'vue'
 
 export function useForm(fields: FieldProps[], options: UseFormProps = {}) {
@@ -12,8 +12,10 @@ export function useForm(fields: FieldProps[], options: UseFormProps = {}) {
   const formRef = shallowRef<InstanceType<typeof NForm>>()
   const { itemsNodeMap, flattenedFields } = createItemNodeMap(fields, form)
   const defaultField = createDefaultField(flattenedFields)
-  flattenedFields.forEach(({ key }) => {
+  flattenedFields.forEach((field) => {
+    const { key } = field
     if (isNil(key)) return
+    if (isUnbindItem(field)) return
     form.value[key] = defaultField[key]
   })
 

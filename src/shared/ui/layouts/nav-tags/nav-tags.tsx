@@ -9,8 +9,6 @@ const LayoutNavTags = defineComponent(() => {
   const { tags, active, append, remove, setActive } = useNavTagsStore()
   const route = useRoute()
   const router = useRouter()
-  console.log('tags.value')
-  console.log(tags.value)
 
   watch(
     () => route.name,

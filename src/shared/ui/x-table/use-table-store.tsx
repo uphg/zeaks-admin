@@ -13,7 +13,7 @@ export function useTableStore() {
   const checkedRowKeys = ref<RowKey[]>([])
   const checkedColumnKeys = ref<string[]>([])
   const columns = ref([])
-  return { data, page, pageSize, total, sorter, loading, checkedRowKeys, checkedColumnKeys, columns } as XTableStore
+  return { data, page, pageSize, total, sorter, loading, checkedRowKeys, checkedColumnKeys, columns } as Partial<XTableStore>
 }
 
 export const useTableSharedStore = createStore(useTableStore)

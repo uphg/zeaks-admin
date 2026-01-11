@@ -109,8 +109,6 @@ function renderMenuLabel(option: MenuOption) {
 
 function renderMenuIcon(option: MenuOption) {
   // 渲染图标占位符以保持缩进
-  console.log('option')
-  console.log(option)
   if (!option.icon) return
   return h(option.icon)
 }

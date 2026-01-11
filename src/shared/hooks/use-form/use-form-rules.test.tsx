@@ -199,8 +199,6 @@ describe('form rules generation', () => {
         message: '请输入数字输入',
         trigger: ['blur', 'change'],
       })
-      console.log('rules.slider')
-      console.log(rules.slider)
       expect(rules.slider).toMatchObject({
         type: 'number',
         required: true,

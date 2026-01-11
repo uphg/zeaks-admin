@@ -65,8 +65,6 @@ function processOptions<T extends SelectOption>(options?: MaybeRefOrGetter<T[]>)
 export function createItemNodeMap(fields: FieldProps[], form: Ref<Record<string, any>>) {
   const flattenedFields = flattenFields(fields)
   const map = new Map()
-  console.log('flattenedFields')
-  console.log(flattenedFields)
   flattenedFields.forEach((field, index) => {
     const { key } = field
     const node = createItemNode(field, form)

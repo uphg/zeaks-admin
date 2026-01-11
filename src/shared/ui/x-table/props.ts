@@ -1,6 +1,7 @@
 import type { ClassValue } from 'clsx'
 import type { DataTableColumn, DataTableProps, TableProps } from 'naive-ui'
 import { dataTableProps } from 'naive-ui'
+import type { RowData } from 'naive-ui/es/data-table/src/interface'
 import { type PropType, type Ref } from 'vue'
 
 export type DataSourceOptions = { page: number, pageSize: number }
@@ -27,6 +28,11 @@ export interface XTableStore {
   checkedRowKeys: Ref<(string | number)[]>
   checkedColumnKeys: Ref<(string | number)[]>
   columns: Ref<DataTableProps['columns']> | null
+  reload: () => Promise<any>
+  resetPage: () => void
+  startLoading: () => void
+  stopLoading: () => void
+  getSelectedRows: () => RowData[] | undefined
 }
 
 export const pagingWrapDefaultClass = 'flex justify-end'

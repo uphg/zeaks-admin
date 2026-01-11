@@ -24,8 +24,6 @@ const XStateSwitch = defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    console.log(props.checked)
-    console.log(props.unchecked)
     return () => (
       <NSwitch 
         checkedValue={props.checked[0]} 

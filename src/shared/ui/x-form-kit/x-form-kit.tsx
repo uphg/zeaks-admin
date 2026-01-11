@@ -1,14 +1,16 @@
-import { computed, defineComponent, ref, shallowRef, type PropType } from "vue"
-import { createDefaultField, createFormRules, createItemNodeMap, renderFields } from "./helpers"
-import { NForm, NGrid, type GridProps } from "naive-ui"
+import { computed, defineComponent, ref, shallowRef, type ExtractPropTypes, type PropType } from "vue"
+import { actionNodeTags, createDefaultField, createFormRules, createItemNodeMap, isUnbindItem, renderFields } from "./helpers"
+import { formProps, NForm, NGrid, type GridProps } from "naive-ui"
 import { assign, isNil, isObject, omit } from "lodash-es"
 import type { FormValidateCallback, ShouldRuleBeApplied } from "naive-ui/es/form/src/interface"
 import type { FieldProps } from "./types"
 import type { FormKitStore } from "./props"
 
-const formKitProps = {
+export type XFormKitProps = ExtractPropTypes<typeof formKitProps>
+
+const customProps = {
   store: Object as PropType<FormKitStore>,
-  grid: [String, Boolean] as PropType<GridProps | boolean>,
+  grid: [String, Boolean, Object] as PropType<GridProps | boolean>,
   autoRules: [Array, Boolean] as PropType<string[] | boolean>,
   fields: {
     type: [Array] as PropType<FieldProps[]>,
@@ -16,7 +18,12 @@ const formKitProps = {
   }
 }
 
-const customOptionNames = Object.keys(formKitProps)
+const customOptionNames = Object.keys(customProps)
+
+const formKitProps = {
+  ...formProps,
+  ...customProps
+}
 
 const XFormKit = defineComponent({
   props: formKitProps,
@@ -29,8 +36,10 @@ const XFormKit = defineComponent({
     const gridProps = computed(() => isObject(props?.grid) ? props.grid : {})
     const defaultField = createDefaultField(flattenedFields)
 
-    flattenedFields.forEach(({ key }) => {
+    flattenedFields.forEach((field) => {
+      const { key } = field
       if (isNil(key)) return
+      if (isUnbindItem(field)) return
       form.value[key] = defaultField[key]
     })  
     rules.value = createFormRules(flattenedFields, props)
